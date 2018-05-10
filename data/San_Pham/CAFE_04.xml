@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SanPham MaSP="CAFE_04" Ten="Blonde Roast" GiaBan="47000" TamNgung="false" MoTa="Lightly roasted coffee that's soft, mellow and flavorful.">
+			<LoaiSP MaLoai="CAFE" Ten="Coffee"/>
+		</SanPham>

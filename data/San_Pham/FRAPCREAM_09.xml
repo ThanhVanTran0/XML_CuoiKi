@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SanPham MaSP="FRAPCREAM_09" Ten="Hazelnut Syrup" GiaBan="80000" TamNgung="false" MoTa="Vanilla flavour combined with milk, blended with ice and topped with whipped cream.">
+			<LoaiSP MaLoai="FRAPCREAM" Ten="Frap Cream"/>
+		</SanPham>

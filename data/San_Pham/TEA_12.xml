@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SanPham MaSP="TEA_12" Ten="Black Tea with Ruby Grapefruit and Honey" GiaBan="70000" TamNgung="false" MoTa="Combines a traditional western black tea experience with a creative twist that is delicious with bits of pomelo fruit, grapefruit and honey for a touch of added sweetness.">
+			<LoaiSP MaLoai="TEA" Ten="Tea"/>
+		</SanPham>

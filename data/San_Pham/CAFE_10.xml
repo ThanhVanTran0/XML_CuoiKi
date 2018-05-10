@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SanPham MaSP="CAFE_10" Ten="Asian dolce latte" GiaBan="67000" TamNgung="false" MoTa="Double-shots of the premium, dark-roasted Starbucks Espresso Roast, combine with the uniquely developed dolce sauce.">
+			<LoaiSP MaLoai="CAFE" Ten="Coffee"/>
+</SanPham>

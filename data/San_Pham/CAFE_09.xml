@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SanPham MaSP="CAFE_09" Ten="Ristretto bianco" GiaBan="62000" TamNgung="false" MoTa="A product of simplicity, crafted into artistry, our baristas know that balance is key to the perfect Ristretto Bianco">
+			<LoaiSP MaLoai="CAFE" Ten="Coffee"/>
+		</SanPham>
