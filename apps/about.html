@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Store Template</title>
+	<title>Về Chúng Tôi</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
@@ -73,13 +73,13 @@
 						</div>
 						<div class="col-xs-10 text-right menu-1">
 							<ul>
-								<li class="active">
+								<li>
 									<a href="index.html">Trang chủ</a>
 								</li>
 								<li>
 									<a href="shop.html">Danh sách sản phẩm</a>
 								</li>
-								<li>
+								<li class="active">
 									<a href="about.html">Về chúng tôi</a>
 								</li>
 								<li>
@@ -126,13 +126,13 @@
 									<h2>Thông tin</h2>
 									<ul>
 										<li>
-											<a href="#">Lịch sử</a>
+											<a href="#" onclick="ChuyenTrang(1)">Lịch sử</a>
 										</li>
 										<li>
-											<a href="#">Sự công nhận</a>
+											<a href="#" onclick="ChuyenTrang(2)">Sự công nhận</a>
 										</li>
 										<li>
-											<a href="#">Tuyên bố về Sứ mệnh Starbucks</a>
+											<a href="#" onclick="ChuyenTrang(3)">Tuyên bố về Sứ mệnh Starbucks</a>
 										</li>
 									</ul>
 								</div>
@@ -384,6 +384,33 @@
 		var tabSuMenh = document.getElementById('SuMenh');
 		tabSuCongNhan.style.display = "none";
 		tabSuMenh.style.display = "none";
+
+		function ChuyenTrang(trang) {
+			switch(trang) {
+				case 1:
+				{
+					tabLichSu.style.display = "block";
+					tabSuCongNhan.style.display = "none";
+					tabSuMenh.style.display = "none";
+				}
+				break;
+				case 2:
+				{
+					tabLichSu.style.display = "none";
+					tabSuCongNhan.style.display = "block";
+					tabSuMenh.style.display = "none";
+				}
+				break;
+				case 3:
+				{
+					tabLichSu.style.display = "none";
+					tabSuCongNhan.style.display = "none";
+					tabSuMenh.style.display = "block";
+				}
+				break;
+			}
+		}
+
 	</script>
 
 </body>
