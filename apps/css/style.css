@@ -514,7 +514,10 @@ h1, h2, h3, h4, h5, h6, figure {
       opacity: 0;
       -webkit-transition: 0.3s;
       -o-transition: 0.3s;
-      transition: 0.3s; }
+      transition: 0.3s; 
+      overflow-wrap:  break-word;
+      color: white;
+    }
       .product-entry .product-img .cart p {
         display: block;
         margin-bottom: 0;
@@ -2114,3 +2117,7 @@ input[type="text"] {
 
 .js .animate-box {
   opacity: 0; }
+
+.desc {
+  overflow-wrap:  break-word;
+}
