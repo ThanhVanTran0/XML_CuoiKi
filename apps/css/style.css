@@ -819,7 +819,7 @@ h1, h2, h3, h4, h5, h6, figure {
   padding-bottom: 1em;
   margin-bottom: 1em; }
   .product-cart .one-forth, .product-name .one-forth {
-    width: calc(100% - 520px);
+    width: calc(100% - 500px);
     height: 100px !important;
     display: table;
     float: left; }
@@ -827,7 +827,7 @@ h1, h2, h3, h4, h5, h6, figure {
       .product-cart .one-forth, .product-name .one-forth {
         width: calc(100% - 240px); } }
   .product-cart .one-eight, .product-name .one-eight {
-    width: 130px;
+    width: 240px;
     height: 100px !important;
     display: table;
     float: left; }

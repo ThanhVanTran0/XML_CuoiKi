@@ -1,28 +1,27 @@
 <!DOCTYPE HTML>
 <html>
-
-<head>
+	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Store Template</title>
+	<title>Admin</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="author" content="" />
 
-	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content="" />
-	<meta property="og:image" content="" />
-	<meta property="og:url" content="" />
-	<meta property="og:site_name" content="" />
-	<meta property="og:description" content="" />
+  <!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
 	<meta name="twitter:title" content="" />
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
 
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
-
+	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -39,7 +38,7 @@
 	<!-- Owl Carousel -->
 	<link rel="stylesheet" href="css/owl.carousel.min.css">
 	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-
+	
 	<!-- Date Picker -->
 	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
 	<!-- Flaticons  -->
@@ -48,14 +47,15 @@
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
 
+	<!-- My style -->
+	<link rel="stylesheet" href="css/mystyle.css">
+
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 
-
-</head>
-
-<body>
-
+	</head>
+	<body>
+		
 	<div class="colorlib-loader"></div>
 
 	<div id="page">
@@ -70,10 +70,10 @@
 						</div>
 						<div class="col-xs-10 text-right menu-1">
 							<ul>
-								<li>
+								<li class="active">
 									<a href="index.html">Trang chủ</a>
 								</li>
-								<li class="active">
+								<li>
 									<a href="shop.html">Danh sách sản phẩm</a>
 								</li>
 								<li>
@@ -91,103 +91,77 @@
 		<aside id="colorlib-hero" class="breadcrumbs">
 			<div class="flexslider">
 				<ul class="slides">
-					<li style="background-image: url(images/cover-img-1.jpg);">
-						<div class="overlay"></div>
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
-									<div class="slider-text-inner text-center">
-										<h1>Sản Phẩm</h1>
-										<h2 class="bread">
-											<span>
-												<a href="index.html">Trang Chủ</a>
-											</span>
-											<span>Shop</span>
-										</h2>
-									</div>
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
+			   	<li style="background-image: url(images/cover-img-1.jpg);">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
+				   				<div class="slider-text-inner text-center">
+				   					<h1>Admin</h1>
+				   					<h2 class="bread"><span><a href="index.html">Trang Chủ</a></span> <span>Admin</span></h2>
+				   				</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+			  	</ul>
+		  	</div>
 		</aside>
+
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col-md-5 col-md-offset-1">
+					<h3>Các loại sản phẩm</3>
+					<select name="loaiSP" id="inputLoaiSP" class="form-control" required="required">
+						<option value="">ALL</option>
+					</select>
+				</div>
+
+				<div class="col-md-5 col-md-offset-1">
+					<h3>&nbsp</h3>
+					<button type="button" class="btn btn-primary">Cập nhật các thay đổi</button>
+				</div>
+			</div>
+		</div>
 
 		<div class="colorlib-shop">
 			<div class="container">
-				<div class="row">
-					<div class="col-md-10 col-md-push-2">
-						<div class="row row-pb-lg">
-
-							<div class="col-md-4 text-center">
-								<div class="product-entry">
-									<div class="product-img" style="background-image: url(images/item-5.jpg);">
-										<p class="tag">
-											<span class="new">CAFE_01</span>
-										</p>
-										<div class="cart">
-											<p>
-												Hương vị đậm đà đánh thức vị giác
-											</p>
-										</div>
-									</div>
-									<div class="desc">
-										<h3>
-											<a href="#">Cafe Capochino</a>
-										</h3>
-										<p class="price">
-											<span>65000 VND</span>
-										</p>
-									</div>
+				<div class="row row-pb-md">
+					<div class="col-md-10 col-md-offset-1">
+						<div class="product-name">
+							<div class="one-forth text-center">
+								<span>Sản Phẩm</span>
+							</div>
+							<div class="one-eight text-center">
+								<span>Giá bán</span>
+							</div>
+							<div class="one-eight text-center">
+								<span>Tạm Ngưng</span>
+							</div>
+						</div>
+						<div class="product-cart">
+							<div class="one-forth">
+								<div class="product-img" style="background-image: url(images/item-6.jpg);">
+								</div>
+								<div class="display-tc">
+									<h3>Espresso Light Frappuccino® Blended Coffee</h3>
 								</div>
 							</div>
-							<!-- End 1 san phẩm -->
-						</div>
-
-						<div class="row">
-							<div class="col-md-12">
-								<ul class="pagination">
-									<li class="disabled">
-										<a href="#">&laquo;</a>
-									</li>
-									<li class="active">
-										<a href="#">1</a>
-									</li>
-									<li>
-										<a href="#">2</a>
-									</li>
-									<li>
-										<a href="#">3</a>
-									</li>
-									<li>
-										<a href="#">4</a>
-									</li>
-									<li>
-										<a href="#">&raquo;</a>
-									</li>
-								</ul>
+							<div class="one-eight text-center">
+								<div class="display-tc">
+									<input type="text" value="$68.00" placeholder="">
+								</div>
 							</div>
-						</div>
-					</div>
-					<!-- End phần phân trang -->
-					<div class="col-md-2 col-md-pull-10">
-						<div class="sidebar">
-							<div class="side">
-								<h2>Sản Phẩm</h2>
-								<div class="fancy-collapse-panel">
-									<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-										<select name="SanPham" class="form-control">
-											<option value="">All</option>
-											<option value="">Cafe</option>
-											<option value="">Frapblended</option>
-											<option value="">FrapCream</option>
-											<option value="">Tea</option>
-										</select>
-
-									</div>
+							<div class="one-eight text-center">
+								<div class="display-tc">
+									<label class="switch">
+									  <input type="checkbox" checked="true">
+									  <span class="slider round"></span>
+									</label>
 								</div>
 							</div>
 						</div>
+						<!-- End một sản phẩm -->
 					</div>
 				</div>
 			</div>
@@ -274,13 +248,10 @@
 		</footer>
 	</div>
 
-
 	<div class="gototop js-top">
-		<a href="#" class="js-gotop">
-			<i class="icon-arrow-up2"></i>
-		</a>
+		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
 	</div>
-
+	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
@@ -302,7 +273,8 @@
 	<script src="js/jquery.stellar.min.js"></script>
 	<!-- Main -->
 	<script src="js/main.js"></script>
+	</script>
 
-</body>
-
+	</body>
 </html>
+
