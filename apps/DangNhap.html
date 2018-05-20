@@ -79,7 +79,7 @@
 									<a href="about.html">Về chúng tôi</a>
 								</li>
 								<li class="active">
-									<a href="about.html">Đăng nhập</a>
+									<a href="DangNhap.html">Đăng nhập</a>
 								</li>
 							</ul>
 						</div>
@@ -92,16 +92,16 @@
 			<div class="row">
 				
 				<div class="col-md-5 col-md-push-4 text-center" style="margin-top:40px;margin-bottom:40px">
-					<form action="" method="POST" role="form">
+					<form action="http://localhost:3002" method="POST" role="form" onsubmit="return validateForm()">
 						<legend>Đăng Nhập</legend>
 					
 						<div class="form-group">
-							<input type="text" class="form-control" id="ID" placeholder="ID">
+							<input type="text" id="formID" name="formID" class="form-control" id="ID" placeholder="ID">
 						</div>
 
 						<div class="form-group">
-								<input type="password" class="form-control" id="PASS" placeholder="Password">
-							</div>
+								<input type="password" id="formPass"  name="formPass" class="form-control" id="PASS" placeholder="Password">
+						</div>
 					
 						<button type="submit" class="btn btn-primary">Đăng Nhập</button>
 					</form>
@@ -220,7 +220,8 @@
 	<script src="js/jquery.stellar.min.js"></script>
 	<!-- Main -->
 	<script src="js/main.js"></script>
-	</script>
+
+	<script src="js/dangnhap.js"></script>
 
 </body>
 
