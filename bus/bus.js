@@ -23,10 +23,38 @@ app.createServer((req,res) => {
 		case 'GET':
 		{
 			switch(req.url) {
-				case '/test':
+				case '/DanhSachSanPham':
 				{
-					res.writeHeader(200,{'Content-Type':'text/plain','Access-Control-Allow-Origin' : '*'})
-					res.end('hello');
+					var options = {
+						hostname: 'localhost',
+						port : 3000,
+						path : '/DanhSachSanPham',
+						method : 'GET'
+					}
+
+					var httpRes;
+					httpRes = app.get(options, (response) => {
+						var body = ''
+
+						response.on('error',() => {
+							console.log('ERROR: Lỗi lấy danh sách sản phẩm');
+							res.writeHeader(404,{'Content-Type':'text/plain'});
+							res.end("Can not get data");
+						})
+
+						response.on('data',(chunk) => {
+							body += chunk;
+						}).on('end',() => {
+							res.writeHeader(200,{'Content-Type':'text/xml','Access-Control-Allow-Origin' : '*'})
+							res.end(body);
+							return;
+						});
+					});
+
+					httpRes.on('error', function() {
+							res.writeHeader(404,{'Content-Type':'text/plain'});
+							res.end("Can not get data");
+					});
 				}
 				break;
 				default:

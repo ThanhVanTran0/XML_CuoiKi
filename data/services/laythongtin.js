@@ -14,7 +14,7 @@ var get_ds_San_Pham = () => {
         var data = fs.readFileSync(filePath,"utf-8");
 
         parser.parseString(data,function(err,result){
-            ds_SanPham.push({'San_Pham':result.SanPham.$});
+            ds_SanPham.push(result);
         })
     })
     var builder = new xml2js.Builder();

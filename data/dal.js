@@ -19,14 +19,7 @@ app.createServer((req,res) => {
 				case '/DanhSachSanPham':
 				{
 					var xml = layThongTin.get_ds_San_Pham();
-					res.writeHeader(200,{'Content-Type':'text/xml'});
-					res.end(xml)
-				}
-				break;
-				case '/gettest':
-				{
-					var xml = layThongTin.get_ds_San_Pham();
-					res.writeHeader(200,{'Content-Type': 'text/plain'})
+					res.writeHeader(200,{'Content-Type':'text/xml','Access-Control-Allow-Origin' : '*'});
 					res.end(xml)
 				}
 				break;
