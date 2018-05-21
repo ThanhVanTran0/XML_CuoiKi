@@ -1,27 +1,28 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
+
+<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Admin</title>
+	<title>Nhân viên</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="author" content="" />
 
-  <!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
+	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="" />
+	<meta property="og:image" content="" />
+	<meta property="og:url" content="" />
+	<meta property="og:site_name" content="" />
+	<meta property="og:description" content="" />
 	<meta name="twitter:title" content="" />
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
 
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
-	
+
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -38,7 +39,7 @@
 	<!-- Owl Carousel -->
 	<link rel="stylesheet" href="css/owl.carousel.min.css">
 	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	
+
 	<!-- Date Picker -->
 	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
 	<!-- Flaticons  -->
@@ -47,15 +48,15 @@
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
 
-	<!-- My style -->
 	<link rel="stylesheet" href="css/mystyle.css">
 
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 
-	</head>
-	<body>
-		
+</head>
+
+<body>
+
 	<div class="colorlib-loader"></div>
 
 	<div id="page">
@@ -88,117 +89,138 @@
 				</div>
 			</div>
 		</nav>
+
 		<aside id="colorlib-hero" class="breadcrumbs">
 			<div class="flexslider">
 				<ul class="slides">
-			   	<li style="background-image: url(images/cover-img-1.jpg);">
-			   		<div class="overlay"></div>
-			   		<div class="container-fluid">
-			   			<div class="row">
-				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
-				   				<div class="slider-text-inner text-center">
-				   					<h1>Admin</h1>
-				   					<h2 class="bread"><span><a href="index.html">Trang Chủ</a></span> <span>Admin</span></h2>
-				   				</div>
-				   			</div>
-				   		</div>
-			   		</div>
-			   	</li>
-			  	</ul>
-		  	</div>
+					<li style="background-image: url(images/cover-img-1.jpg);">
+						<div class="overlay"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
+									<div class="slider-text-inner text-center">
+										<h1>Nhân Viên</h1>
+										<h2 class="bread">
+											<span>
+												<a href="index.html">Trang Chủ</a>
+											</span>
+											<span>Nhân Viên</span>
+										</h2>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
 		</aside>
-
-		<div class="container">
-			<div class="row row-pb-md">
-				<div class="col-md-5 col-md-offset-1">
-					<h3>Các loại sản phẩm</h3>
-					<select name="loaiSP" id="inputLoaiSP" class="form-control" onchange="LoaiSPThayDoi()" required="required">
-					</select>
-				</div>
-			</div>
-			<div class="row row-pb-md">
-				<div class="col-md-12 col-md-offset-1">
-					<h3>Chỉnh Sửa</h3>
-					<div class="row">
-						<div class="col-md-3">
-							<h4>Mã SP</h4>
-							<input type="text" list="listMASP" id="txtMASP" value="" placeholder="">
-							<datalist id="listMASP">
-								
-							</datalist>
-						</div>
-
-						<div class="col-md-3">
-							<h4>Giá Bán</h4>
-							<input type="text" name="" value="" placeholder="">
-						</div>
-
-						<div class="col-md-3">
-							<h4>Tình Trạng</h4>
-							<select name="" id="inputTamNgung" class="form-control" required="required">
-								<option value="true">Tạm Ngưng</option>
-								<option value="false">Bán Sản Phẩm</option>
-							</select>
-						</div>
-
-						<div class="col-md-3">
-							<h4>&nbsp;</h4>
-							<button type="button" class="btn btn-primary">Cập nhật</button>
-						</div>
-
-					</div>
-	
-				</div>
-			</div>
-		</div>
 
 		<div class="colorlib-shop">
 			<div class="container">
-				<div class="row row-pb-md">
-					<div class="col-md-10 col-md-offset-1" id="DANH_SACH_SP">
-						<div>
-						<div class="product-name">
-							<div class="one-forth text-center">
-								<span>Sản Phẩm</span>
+
+				<div role="tabpanel">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a href="#PHIEU_BAN" aria-controls="home" role="tab" data-toggle="tab">Phiếu Bán</a>
+						</li>
+						<li role="presentation">
+							<a href="#DANH_SACH_BAN" aria-controls="tab" role="tab" data-toggle="tab">Danh sách bán</a>
+						</li>
+						<li role="presentation">
+							<a href="#DANH_SACH_SP" aria-controls="tab" role="tab" data-toggle="tab">Danh sách sản phẩm</a>
+						</li>
+					</ul>
+
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="PHIEU_BAN">
+							<div class="row row-pb-md">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center">
+									<h2>Phiếu Bán</h2>
+								</div>
 							</div>
-							<div class="one-eight text-center">
-								<span>Mã Sản Phẩm</span>
+							<div class="row row-pb-md">
+								<div class="col-md-3">
+									<h4>Tên Nhân Viên</h4>
+									<input type="text" name="" value="Nguyễn Thị Tuyết">
+								</div>
+
+								<div class="col-md-3">
+									<h4>Số Điện Thoại</h4>
+									<input type="text" name="" value="123456789" placeholder="">
+								</div>
+
+								<div class="col-md-6">
+									<h4>Địa Chỉ</h4>
+									<input type="text" name="" value="ádjafjaksjflasfjklajl" placeholder="">
+								</div>
 							</div>
-							<div class="one-eight text-center">
-								<span>Giá bán</span>
+
+							<div class="row row-pb-md">
+								<div class="col-md-3">
+									<h4>Sản Phẩm</h4>
+									<input type="text" name="" value="" placeholder="Mã SP">
+								</div>
+
+								<div class="col-md-3">
+									<h4>Giá bán</h4>
+									<input type="text" name="" value="" placeholder="Giá Bán" disabled="">
+								</div>
+
+								<div class="col-md-2">
+									<h4>Số Lượng</h4>
+									<input type="text" name="" value="" placeholder="Số Lượng">
+								</div>
+
+								<div class="col-md-2">
+									<h4>Ngày Bán</h4>
+									<input type="date" name="" value="" placeholder="Mã SP">
+								</div>
+
+								<div class="col-md-2">
+									<h4>&nbsp;</h4>
+									<button type="button" class="btn btn-primary">Tính Tiền</button>
+								</div>
 							</div>
-							<div class="one-eight text-center">
-								<span>Hiện Trạng</span>
+
+							<div class="row row-pb-md">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<table class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>Mã SP</th>
+												<th>Số Lượng</th>
+												<th>Đơn Giá</th>
+												<th>Thành Tiền</th>
+											</tr>
+										</thead>
+										<tbody id="DS_SP_DUTINHBAN">
+											<tr>
+												<th>CAFE_01</th>
+												<th>2</th>
+												<th>180000</th>
+												<th>320000</th>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="row row-pb-md">
+								<div class="col-md-3 col-md-push-9 tongtien">
+									<h4>Tổng Tiền: <span>140000</span> VND</h4>
+								</div>
 							</div>
 						</div>
-						<div class="product-cart">
-							<div class="one-forth">
-								<div class="product-img" style="background-image: url(images/item-6.jpg);">
-								</div>
-								<div class="display-tc">
-									<h3>Espresso Light Frappuccino® Blended Coffee</h3>
-								</div>
-							</div>
-							<div class="one-eight text-center">
-								<div class="display-tc">
-									<h3>CAFE_01</h3>
-								</div>
-							</div>
-							<div class="one-eight text-center">
-								<div class="display-tc">
-									<h3>78000 VND</h3>
-								</div>
-							</div>
-							<div class="one-eight text-center">
-								<div class="display-tc">
-									<h3>Đang bán</h3>
-								</div>
-							</div>
-						</div>
-						<!-- End một sản phẩm -->
-						</div>
+						<!-- end tab Phieu ban -->
+						<div role="tabpanel" class="tab-pane" id="DANH_SACH_BAN">...</div>
+						<!-- End tab danh sách bán -->
+						<div role="tabpanel" class="tab-pane" id="DANH_SACH_SP">...</div>
+						<!-- end tab danh sách sản phẩm -->
 					</div>
 				</div>
+
 			</div>
 		</div>
 
@@ -284,9 +306,11 @@
 	</div>
 
 	<div class="gototop js-top">
-		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+		<a href="#" class="js-gotop">
+			<i class="icon-arrow-up2"></i>
+		</a>
 	</div>
-	
+
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
@@ -309,18 +333,12 @@
 	<!-- Main -->
 	<script src="js/main.js"></script>
 	
-	<script src="js/admin.js"></script>
+	<script src="js/nhanvien.js"></script>
 
-	<script >
-		var data = getData();
-		TaoDanhSachLoaiSP(data);
-		TaoDanhSachMaSP(data);
-		var Danh_sach = taoDanhSachHienThi(data);
-		var DANH_SACH_SP = document.getElementById("DANH_SACH_SP");
-		DANH_SACH_SP.innerHTML = "";
-		DANH_SACH_SP.appendChild(Danh_sach);
+	<script>
+		
 	</script>
 
-	</body>
-</html>
+</body>
 
+</html>

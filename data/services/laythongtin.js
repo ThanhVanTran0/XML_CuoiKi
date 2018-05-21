@@ -7,6 +7,7 @@ var path = __dirname + '/../San_Pham';
 var ds_SanPham = [];
 
 var get_ds_San_Pham = () => {
+    ds_SanPham = [];
     fs.readdirSync(path).forEach(file => {
         var filePath = path + "/" + file;
 

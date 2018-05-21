@@ -827,7 +827,7 @@ h1, h2, h3, h4, h5, h6, figure {
       .product-cart .one-forth, .product-name .one-forth {
         width: calc(100% - 240px); } }
   .product-cart .one-eight, .product-name .one-eight {
-    width: 240px;
+    width: 164px;
     height: 100px !important;
     display: table;
     float: left; }
@@ -841,7 +841,7 @@ h1, h2, h3, h4, h5, h6, figure {
     width: 100%; }
     .product-cart .display-tc h3, .product-name .display-tc h3 {
       margin-bottom: 0;
-      padding-left: 30px;
+      padding-left: 7px;
       font-size: 14px; }
     .product-cart .display-tc .closed, .product-name .display-tc .closed {
       display: block;
