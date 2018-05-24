@@ -255,21 +255,21 @@
 										<thead>
 											<tr>
 												<th>SP</th>
+												<th>Mã SP</th>
 												<th>Tên SP</th>
 												<th>Đơn Giá</th>
-												<th>Tình Trạng</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<td>
-													<div class="sanpham_info" item-width="100px" item-height="100px">
-														<img src="images/CAFE_01.jpg" alt="" width="60px" height="auto"> CAFE_01
+													<div class="sanpham_info">
+														<img src="images/CAFE_01.jpg" alt="" width="60px" height="auto">
 													</div>
 												</td>
+												<td>sạdhah</td>
 												<td>ádasdjasjdasdkasjdl</td>
 												<td>2</td>
-												<td>180000 VND</td>
 											</tr>
 										</tbody>
 									</table>
@@ -397,10 +397,17 @@
 	<script src="js/jquery.dataTables.min.js"></script>
 
 	<script>
+		var g_table_ban;
+		var g_table_da_ban;
+		var g_table_sp;
+
+		var data = getData();
+
 		$(document).ready(function () {
 			$('#DS_BAN').DataTable();
 			$('#DS_DA_BAN').DataTable();
-			$('#DS_SP').DataTable();
+			g_table_sp = $('#DS_SP').DataTable();
+			HienThiDanhSachSanPham(data,g_table_sp);
 		});
 	</script>
 

@@ -30,7 +30,7 @@ function HienThiDanhSachSanPham(Danh_sach_san_pham,table) {
 		var newRow = `<tr>
 						<td>
 							<div class="sanpham_info">
-								<img src="${img_src}" alt="" width="60px" height="auto">
+								<img src="${img_src}" alt="" width="60px" height="60px">
 							</div>
 						</td>
 						<td>${MASP}</td>
