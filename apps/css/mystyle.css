@@ -23,3 +23,22 @@ input[type="date"] {
 .col-md-3.col-md-push-6.tongtien {
     margin-top:  14px;
 }
+
+input[type="search"] {
+    border: 1px solid #FFC300 !important;
+}
+td.sorting_1 {
+    text-align:  center;
+}
+
+tr.odd, tr.even {
+    text-align:  center;
+}
+
+th.sorting {
+    text-align:  center;
+}
+
+th.sorting_asc {
+    text-align:  center;
+}

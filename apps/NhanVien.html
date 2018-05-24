@@ -50,6 +50,8 @@
 
 	<link rel="stylesheet" href="css/mystyle.css">
 
+	<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 
@@ -175,7 +177,7 @@
 
 								<div class="col-md-2">
 									<h4>Ngày Bán</h4>
-									<input type="date" name="" value="" placeholder="Mã SP">
+									<input type="date" name="" value="">
 								</div>
 
 								<div class="col-md-2">
@@ -186,21 +188,23 @@
 
 							<div class="row row-pb-md">
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									<table class="table table-bordered table-hover">
+									<table id="DS_BAN" class="display" style="width:100%">
 										<thead>
 											<tr>
-												<th>Mã SP</th>
+												<th>MaSP</th>
+												<th>Tên SP</th>
 												<th>Số Lượng</th>
 												<th>Đơn Giá</th>
-												<th>Thành Tiền</th>
+												<th>Tổng Tiền</th>
 											</tr>
 										</thead>
-										<tbody id="DS_SP_DUTINHBAN">
+										<tbody>
 											<tr>
-												<th>CAFE_01</th>
-												<th>2</th>
-												<th>180000</th>
-												<th>320000</th>
+												<td>CAFE_01</td>
+												<td>CAFE_01</td>
+												<td>2</td>
+												<td>180000 VND</td>
+												<td>360000 VND</td>
 											</tr>
 										</tbody>
 									</table>
@@ -209,14 +213,69 @@
 
 							<div class="row row-pb-md">
 								<div class="col-md-3 col-md-push-9 tongtien">
-									<h4>Tổng Tiền: <span>140000</span> VND</h4>
+									<h4>Tổng Tiền:
+										<span>140000</span> VND</h4>
 								</div>
 							</div>
 						</div>
 						<!-- end tab Phieu ban -->
-						<div role="tabpanel" class="tab-pane" id="DANH_SACH_BAN">...</div>
+						<div role="tabpanel" class="tab-pane" id="DANH_SACH_BAN">
+							<div class="row row-pb-md">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<table id="DS_DA_BAN" class="display" style="width:100%">
+										<thead>
+											<tr>
+												<th>MaSP</th>
+												<th>Tên SP</th>
+												<th>Số Lượng</th>
+												<th>Đơn Giá</th>
+												<th>Ngày Bán</th>
+												<th>Tổng Tiền</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>CAFE_01</td>
+												<td>ádasdjasjdasdkasjdl</td>
+												<td>2</td>
+												<td>180000 VND</td>
+												<td>18/02/2018</td>
+												<td>360000 VND</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 						<!-- End tab danh sách bán -->
-						<div role="tabpanel" class="tab-pane" id="DANH_SACH_SP">...</div>
+						<div role="tabpanel" class="tab-pane" id="DANH_SACH_SP">
+							<div class="row row-pb-md">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<table id="DS_SP" class="display" style="width:100%">
+										<thead>
+											<tr>
+												<th>SP</th>
+												<th>Tên SP</th>
+												<th>Đơn Giá</th>
+												<th>Tình Trạng</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>
+													<div class="sanpham_info" item-width="100px" item-height="100px">
+														<img src="images/CAFE_01.jpg" alt="" width="60px" height="auto"> CAFE_01
+													</div>
+												</td>
+												<td>ádasdjasjdasdkasjdl</td>
+												<td>2</td>
+												<td>180000 VND</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 						<!-- end tab danh sách sản phẩm -->
 					</div>
 				</div>
@@ -332,11 +391,17 @@
 	<script src="js/jquery.stellar.min.js"></script>
 	<!-- Main -->
 	<script src="js/main.js"></script>
-	
+
 	<script src="js/nhanvien.js"></script>
 
+	<script src="js/jquery.dataTables.min.js"></script>
+
 	<script>
-		
+		$(document).ready(function () {
+			$('#DS_BAN').DataTable();
+			$('#DS_DA_BAN').DataTable();
+			$('#DS_SP').DataTable();
+		});
 	</script>
 
 </body>
