@@ -1,4 +1,5 @@
 var app = require('http');
+var xl_tham_so = require('querystring');
 
 var port = 3001;
 var fs = require('fs');
@@ -17,7 +18,17 @@ app.createServer((req,res) => {
 	switch(req.method) {
 		case 'POST':
 		{
-			
+			if(req.url === '/login') {
+				
+				var body = ''
+				req.on('data', function (data) {
+					body += data;
+				}).on('end',function() {
+					var post = xl_tham_so.parse(body);
+					console.log(post.formID);
+					console.log(post.formPass);
+				})
+			}
 		}
 		break;
 		case 'GET':
