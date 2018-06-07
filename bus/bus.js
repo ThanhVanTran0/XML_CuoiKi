@@ -19,7 +19,7 @@ app.createServer((req, res) => {
 						console.log("Pass: " + req.headers['password']);
 						var object = {
 							'session':sessiontest,
-							'isadmin':true
+							'isadmin':false
 						}
 						res.writeHead(200,{'Content-Type':'text/plain'});
 						res.end(JSON.stringify(object));
@@ -30,14 +30,14 @@ app.createServer((req, res) => {
 					case '/checksession':
 					{
 						// Goi dal lay session kiem tra
-						res.writeHead(404, {'Content-Type':'text/plain'});
-						res.end();
-						// var object = {
-						// 	'session':sessiontest,
-						// 	'isadmin':true
-						// }
-						// res.writeHead(200,{'Content-Type':'text/plain'});
-						// res.end(JSON.stringify(object));
+						// res.writeHead(404, {'Content-Type':'text/plain'});
+						// res.end('Lỗi chứng thực');
+						var object = {
+							'session':sessiontest,
+							'isadmin':false
+						}
+						res.writeHead(200,{'Content-Type':'text/plain'});
+						res.end(JSON.stringify(object));
 					}
 					break;
 					default:

@@ -90,9 +90,8 @@
 		
 		<div class="container">
 			<div class="row">
-				
 				<div class="col-md-5 col-md-push-4 text-center" style="margin-top:40px;margin-bottom:40px">
-					<form action="http://localhost:3002/login" method="POST" role="form" onsubmit="return validateForm()">
+					<form id="formlogin" method="POST" action="" role="form" onsubmit="return validateForm()">
 						<legend>Đăng Nhập</legend>
 					
 						<div class="form-group">
@@ -102,10 +101,9 @@
 						<div class="form-group">
 								<input type="password" id="formPass"  name="formPass" class="form-control" id="PASS" placeholder="Password">
 						</div>
-						<button type="submit" class="btn btn-primary">Đăng Nhập</button>
+						<button id="btnSubmit" type="submit" class="btn btn-primary">Đăng Nhập</button>
 					</form>
 				</div>
-				
 			</div>
 		</div>
 
@@ -219,7 +217,7 @@
 	<!-- Main -->
 	<script src="js/main.js"></script>
 
-	<script src="js/dangnhap.js"></script>
+	<script src="myjs/dangnhap.js"></script>
 
 </body>
 

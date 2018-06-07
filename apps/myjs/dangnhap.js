@@ -15,6 +15,19 @@ function validateForm() {
 			return true;
 		}
 	}
-
 	return false;
 }
+
+$('#formlogin').submit(function() {
+	$.ajax({
+		url: $('#formlogin').attr('action'),
+		type: 'POST',
+		data : $('#formlogin').serialize(),
+		error: function(error) {
+			alert('Error')
+		},
+		success: function(data){
+		  location.href = data;
+		}
+	});
+}) 
