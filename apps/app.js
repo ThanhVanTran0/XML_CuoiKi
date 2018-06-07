@@ -5,9 +5,16 @@ var url = require('url');
 
 var port = 3002;
 
-function getFile(filePath) {
-	var data = fs.readFileSync(filePath, 'utf-8');
-	return data;
+function parseCookies(request) {
+	var list = {},
+		rc = request.headers.cookie;
+
+	rc && rc.split(';').forEach(function (cookie) {
+		var parts = cookie.split('=');
+		list[parts.shift().trim()] = decodeURI(parts.join('='));
+	});
+
+	return list;
 }
 
 app.createServer((req, res) => {
@@ -20,40 +27,61 @@ app.createServer((req, res) => {
 					req.on('data', function (data) {
 						body += data;
 					}).on('end', function () {
-						// var post = xl_tham_so.parse(body);
-						// console.log(post.formID);
-						// console.log(post.formPass);
+						var post = xl_tham_so.parse(body);
+
 						var options = {
 							hostname: 'localhost',
 							port: 3001,
 							path: '/login',
 							method: 'POST',
+							headers: {
+								"username": post.formID,
+								"password": post.formPass
+							}
 						}
 
 						var httpRes;
-						httpRes = app.request(options, (response) => {
+						httpRes = app.get(options, (response) => {
+							var body = ''
+							response.on('data', (chunk) => {
+								body += chunk;
+							})
 
+							response.on('end', () => {
+								if (response.statusCode == 404) {
+									res.writeHead(404, {
+										'Content-Type': 'text/plain'
+									});
+									res.end('Không thể đăng nhập');
+								} else {
+									var data = JSON.parse(body);
+									console.log('session: ' + data.session);
+									res.writeHead(200, {
+										'Set-Cookie': `session=${data.session}`,
+										'Content-Type': 'text/plain',
+									})
+									res.end();
+								}
+								return;
+							})
 						});
 
-						httpRes.write(body)
 						httpRes.end();
-						
+
+						// Trường hợp lỗi
 						httpRes.on('error', function () {
 							res.writeHeader(404, {
 								'Content-Type': 'text/plain'
 							})
 							res.end('Lỗi đăng nhập');
 						});
-
-						res.writeHead(302, {
-							Location: "/"
-						});
-						res.end();
 					})
 
 				} else {
-					res.writeHead(404, 'Error')
-					res.end();
+					res.writeHead(404, {
+						'Content-Type': 'text/plain'
+					})
+					res.end('Error');
 				}
 			}
 			break;
@@ -62,13 +90,76 @@ app.createServer((req, res) => {
 				var path = req.url.split('?')[0];
 
 				var req_url = (path == '/') ? '/index.html' : path;
+				console.log('req_url: '+ req_url)
+
+				var cookie = parseCookies(req);
+				var session = cookie['session'];
+
+				//Check session dang nhap
+				if (req_url === '/admin.html' || req_url === '/NhanVien.html') {
+					if (typeof session === 'undefined') {
+						res.writeHead(302, {
+							'Content-Type': 'text/html',
+							'Location': '/DangNhap.html'
+						})
+						res.end();
+						return;
+					} else {
+						console.log('Vo kiem tra session')
+						//Gửi bus để kiểm tra session
+						var options = {
+							hostname: 'localhost',
+							port: 3001,
+							method: "POST",
+							path: '/checksession',
+							headers: {
+								session: cookie['session']
+							}
+						}
+
+						var httpRes;
+						httpRes = app.get(options, (response) => {
+							var body = ''
+							response.on('data', (chunk) => {
+								body += chunk;
+							})
+
+							response.on('end', () => {
+								if (response.statusCode == 404) {
+									res.writeHead(404, {
+										'Content-Type': 'text/plain;charset=utf-8'
+									});
+									res.end('Lỗi, vui lòng logout và đăng nhập lại');
+									res.destroy();
+								} else {
+									var data = JSON.parse(body);
+									console.log('session: ' + data.session);
+									var location = '/NhanVien.html'
+									if (data.isadmin == true) {
+										location = '/admin.html'
+									}
+									console.log('Location: ' + location)
+								}
+							});
+							
+						});
+
+						httpRes.end();
+						httpRes.on('error', (err) => {
+							res.writeHead(404, {
+								'Content-Type': 'text/plain;charset=utf-8'
+							})
+							res.end('Lỗi chứng thực, vui lòng logout và đăng nhập lại');
+							return;
+						})
+					}
+				}
 
 				var file_extension = req_url.lastIndexOf('.');
 				var duoiFile = req_url.substr(file_extension);
 
 				var header_type = (file_extension == -1 && req.url != '/') ?
-					'text/plain' :
-					{
+					'text/plain' : {
 						'/': 'text/html',
 						'.html': 'text/html',
 						'.ico': 'image/x-icon',

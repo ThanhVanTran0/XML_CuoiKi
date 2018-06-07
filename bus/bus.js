@@ -4,89 +4,120 @@ var xl_tham_so = require('querystring');
 var port = 3001;
 var fs = require('fs');
 
-var options = {
-	host: 'localhost',
-	port: 3000,
-	path: '/gettest',
-	method: 'GET',
-	header: {
-		'Content-Type':'text/plain'
-	}
-}
+var xmlcache = ''
 
-app.createServer((req,res) => {
-	switch(req.method) {
+var sessiontest = 'abcdef';
+
+app.createServer((req, res) => {
+	switch (req.method) {
 		case 'POST':
-		{
-			if(req.url === '/login') {
-				
-				var body = ''
-				req.on('data', function (data) {
-					body += data;
-				}).on('end',function() {
-					var post = xl_tham_so.parse(body);
-					console.log(post.formID);
-					console.log(post.formPass);
-				})
-			}
-		}
-		break;
-		case 'GET':
-		{
-			switch(req.url) {
-				case '/DanhSachSanPham':
-				{
-					var options = {
-						hostname: 'localhost',
-						port : 3000,
-						path : '/DanhSachSanPham',
-						method : 'GET'
+			{
+				switch(req.url) {
+					case '/login':
+					{
+						console.log("User: " + req.headers['username']);
+						console.log("Pass: " + req.headers['password']);
+						var object = {
+							'session':sessiontest,
+							'isadmin':true
+						}
+						res.writeHead(200,{'Content-Type':'text/plain'});
+						res.end(JSON.stringify(object));
+						// res.writeHead(404, {'Content-Type':'text/plain'});
+						// res.end();
 					}
-
-					var httpRes;
-					httpRes = app.get(options, (response) => {
-						var body = ''
-
-						response.on('error',() => {
-							console.log('ERROR: Lỗi lấy danh sách sản phẩm');
-							res.writeHeader(404,{'Content-Type':'text/plain'});
-							res.end("Can not get data");
-						})
-
-						response.on('data',(chunk) => {
-							body += chunk;
-						}).on('end',() => {
-							res.writeHeader(200,{'Content-Type':'text/xml','Access-Control-Allow-Origin' : '*'})
-							res.end(body);
-							return;
-						});
-					});
-
-					httpRes.on('error', function() {
-							res.writeHeader(404,{'Content-Type':'text/plain'});
-							res.end("Can not get data");
-					});
+					break;
+					case '/checksession':
+					{
+						// Goi dal lay session kiem tra
+						res.writeHead(404, {'Content-Type':'text/plain'});
+						res.end();
+						// var object = {
+						// 	'session':sessiontest,
+						// 	'isadmin':true
+						// }
+						// res.writeHead(200,{'Content-Type':'text/plain'});
+						// res.end(JSON.stringify(object));
+					}
+					break;
+					default:
+					{
+						res.writeHead(404,{'Content-Type':'text/plain;charset=utf-8'});
+						res.end('Không hỗ trợ giao thức');
+					}
+					break;
 				}
-				break;
-				default:
-				{
-					res.writeHeader(404,{'Content-Type':'text/plain'});
-					res.end("Request was not support!!!");
-				}
-				break;
 			}
-		}
-		break;
+			break;
+		case 'GET':
+			{
+				switch (req.url) {
+					case '/DanhSachSanPham':
+						{
+							if (xmlcache === '') {
+								var options = {
+									hostname: 'localhost',
+									port: 3000,
+									path: '/DanhSachSanPham',
+									method: 'GET'
+								}
+
+								var httpRes;
+								httpRes = app.get(options, (response) => {
+									var body = ''
+
+									response.on('data', (chunk) => {
+										body += chunk;
+									}).on('end', () => {
+										res.writeHeader(200, {
+											'Content-Type': 'text/xml',
+											'Access-Control-Allow-Origin': '*'
+										})
+										xmlcache = body;
+										res.end(body);
+										return;
+									});
+								});
+
+								httpRes.on('error', function () {
+									console.log("ERROR: Loi lay danh sach sp");
+									res.writeHeader(404, {
+										'Content-Type': 'text/plain'
+									});
+									res.end("Can not get data");
+								});
+							} else {
+								res.writeHead(200, {
+									'Content-Type': 'text/xml',
+									'Access-Control-Allow-Origin': '*'
+								})
+								res.end(xmlcache);
+							}
+						}
+						break;
+					default:
+						{
+							res.writeHeader(404, {
+								'Content-Type': 'text/plain'
+							});
+							res.end("Request was not support!!!");
+						}
+						break;
+				}
+			}
+			break;
 		default:
-		{
-			res.writeHeader(404,{'Content-Type':'text/plain'});
-			res.end("Request was not support!!!");
-		}
-		break;
+			{
+				res.writeHeader(404, {
+					'Content-Type': 'text/plain'
+				});
+				res.end("Request was not support!!!");
+			}
+			break;
 	}
 
-}).listen(port,(err) => {
-	if(err != null)
+}).listen(port, (err) => {
+	if (err != null)
 		console.log("ERROR: " + err);
 	else
 		console.log("ServerBus is starting at port " + port);
