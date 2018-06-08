@@ -80,10 +80,24 @@
 									<a href="shop.html">Danh sách sản phẩm</a>
 								</li>
 								<li>
-									<a href="about.html">Về chúng tôi</a>
+									<a href="NhanVien.html">Nhân viên</a>
 								</li>
 								<li>
-									<a href="DangNhap.html">Đăng nhập</a>
+									<a href="admin.html">Admin</a>
+								</li>
+								<li>
+									<a href="about.html">Về chúng tôi</a>
+								</li>
+
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tài Khoản
+										<b class="caret"></b>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="#">Log out</a>
+										</li>
+									</ul>
 								</li>
 							</ul>
 						</div>
@@ -407,7 +421,7 @@
 			$('#DS_BAN').DataTable();
 			$('#DS_DA_BAN').DataTable();
 			g_table_sp = $('#DS_SP').DataTable();
-			HienThiDanhSachSanPham(data,g_table_sp);
+			HienThiDanhSachSanPham(data, g_table_sp);
 		});
 	</script>
 

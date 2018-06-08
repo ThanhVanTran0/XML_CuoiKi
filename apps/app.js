@@ -19,6 +19,7 @@ function parseCookies(request) {
 }
 
 app.createServer((req, res) => {
+	console.log('Method: ' + req.method + " url: " + req.url);
 	switch (req.method) {
 		case 'POST':
 			{
@@ -154,10 +155,7 @@ app.createServer((req, res) => {
 
 						httpRes.end();
 						httpRes.on('error', (err) => {
-							res.writeHead(404, {
-								'Content-Type': 'text/plain;charset=utf-8'
-							})
-							res.end('Không thể kết nối đến server.');
+							resErrorPage(res,'Không thể kết nối đến server');
 							return;
 						})
 					}
@@ -201,10 +199,7 @@ app.createServer((req, res) => {
 			break;
 		default:
 			{
-				res.writeHeader(404, {
-					'Content-Type': 'text/plain'
-				});
-				res.end("Request was not support!!!");
+				resErrorPage(res,'Không hỗ trợ đường dẫn.');
 			}
 			break;
 	}

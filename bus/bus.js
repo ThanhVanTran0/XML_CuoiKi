@@ -1,5 +1,6 @@
 var app = require('http');
 var xl_tham_so = require('querystring');
+var resErrorPage = require('../apps/modules/resErrorPage.js')
 
 var port = 3001;
 var fs = require('fs');
@@ -17,14 +18,47 @@ app.createServer((req, res) => {
 					{
 						console.log("User: " + req.headers['username']);
 						console.log("Pass: " + req.headers['password']);
-						var object = {
-							'session':sessiontest,
-							'isadmin':false
+						// var object = {
+						// 	'session':sessiontest,
+						// 	'isadmin':false
+						// }
+						// res.end(JSON.stringify(object));
+
+						//Gửi username và pass cho dal kiểm tra
+						var options = {
+							hostname: 'localhost',
+							port: 3000,
+							path: '/login',
+							method: 'POST',
+							headers: {
+								"username": req.headers['username'],
+								"password": req.headers['password']
+							}
 						}
-						res.writeHead(200,{'Content-Type':'text/plain'});
-						res.end(JSON.stringify(object));
-						// res.writeHead(404, {'Content-Type':'text/plain'});
-						// res.end();
+
+						var httpRes =  app.get(options,function(response) {
+							var body =''
+							response.on('data',(chunk) => {
+								body+= chunk;
+							})
+
+							response.on('end',() => {
+								if(response.statusCode == 404) {
+									res.writeHead(404,{'Content-Type':'text/plain;charset=utf-8'})
+									res.end(body);
+								}else {
+									res.writeHead(200,{'Content-Type':'text/plain'})
+									res.end(body);
+								}
+							})
+						})
+
+						httpRes.end();
+						httpRes.on('error',()=> {
+							res.writeHead(404,{'Content-Type':'text/plain;charset=utf-8'})
+							res.end('Lỗi kết nối server');
+						})
+
 					}
 					break;
 					case '/checksession':
@@ -81,10 +115,7 @@ app.createServer((req, res) => {
 
 								httpRes.on('error', function () {
 									console.log("ERROR: Loi lay danh sach sp");
-									res.writeHeader(404, {
-										'Content-Type': 'text/plain'
-									});
-									res.end("Can not get data");
+									resErrorPage(res,"Không thể kết nối đến dal")
 								});
 							} else {
 								res.writeHead(200, {
@@ -97,10 +128,7 @@ app.createServer((req, res) => {
 						break;
 					default:
 						{
-							res.writeHeader(404, {
-								'Content-Type': 'text/plain'
-							});
-							res.end("Request was not support!!!");
+							resErrorPage(res,'Không hỗ trợ đường dẫn.');
 						}
 						break;
 				}
@@ -108,10 +136,7 @@ app.createServer((req, res) => {
 			break;
 		default:
 			{
-				res.writeHeader(404, {
-					'Content-Type': 'text/plain'
-				});
-				res.end("Request was not support!!!");
+				resErrorPage(res,'Không hỗ trợ đường dẫn.');
 			}
 			break;
 	}

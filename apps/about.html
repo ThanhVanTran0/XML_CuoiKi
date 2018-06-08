@@ -73,17 +73,34 @@
 						</div>
 						<div class="col-xs-10 text-right menu-1">
 							<ul>
-								<li>
+								<li class="active">
 									<a href="index.html">Trang chủ</a>
 								</li>
 								<li>
 									<a href="shop.html">Danh sách sản phẩm</a>
 								</li>
-								<li class="active">
-									<a href="about.html">Về chúng tôi</a>
+								<li>
+									<a href="NhanVien.html">Nhân viên</a>
 								</li>
 								<li>
-									<a href="DangNhap.html">Đăng nhập</a>
+									<a href="admin.html">Admin</a>
+								</li>
+								<li>
+									<a href="about.html">Về chúng tôi</a>
+								</li>
+
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tài Khoản
+										<b class="caret"></b>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="DangNhap.html">Đăng nhập</a>
+										</li>
+										<li>
+											<a href="#">Log out</a>
+										</li>
+									</ul>
 								</li>
 							</ul>
 						</div>
@@ -196,7 +213,8 @@
 									<p>Here are some of our recent awards and recognition.</p>
 									<ul>
 										<li>“No. 1 Best Coffee,” Fast Food and Quick Refreshment categories Zagat’s Survey of National Chain Restaurants –
-											2009‐2010   </li>
+											2009‐2010
+										</li>
 										<li>“No. 1 Most Popular Quick Refreshment Chain” Zagat’s Survey of National Chain Restaurants – 2009‐2010   </li>
 										<li>“Most Ethical Company, European Coffee Industry” Allegra Strategies – 2009‐2010  </li>
 										<li>“Best Coffee House, Germany” Deutschland Institute for Service Quality – 2010</li>
@@ -245,7 +263,9 @@
 
 									<p>
 										<b>Cửa hàng của chúng tôi</b>
-										<br>Khi khách hàng của chúng tôi cảm nhận được cảm giác gần gũi, các cửa hàng của chúng tôi trở thành nơi trú ẩn, nghỉ ngơi cho những lo lắng bên ngoài, một nơi bạn có thể gặp gỡ bạn bè. Đó là về sự tận hưởng tốc độ của cuộc sống – đôi khi chậm và đậm đà hương vị, đôi khi lại nhanh hơn. Luôn tràn đầy tính nhân văn.</p>
+										<br>Khi khách hàng của chúng tôi cảm nhận được cảm giác gần gũi, các cửa hàng của chúng tôi trở thành nơi trú ẩn, nghỉ
+										ngơi cho những lo lắng bên ngoài, một nơi bạn có thể gặp gỡ bạn bè. Đó là về sự tận hưởng tốc độ của cuộc sống
+										– đôi khi chậm và đậm đà hương vị, đôi khi lại nhanh hơn. Luôn tràn đầy tính nhân văn.</p>
 
 									<p>
 										<b>Tuyên bố về Sứ mệnh Môi trường</b>
@@ -386,31 +406,30 @@
 		tabSuMenh.style.display = "none";
 
 		function ChuyenTrang(trang) {
-			switch(trang) {
+			switch (trang) {
 				case 1:
-				{
-					tabLichSu.style.display = "block";
-					tabSuCongNhan.style.display = "none";
-					tabSuMenh.style.display = "none";
-				}
-				break;
+					{
+						tabLichSu.style.display = "block";
+						tabSuCongNhan.style.display = "none";
+						tabSuMenh.style.display = "none";
+					}
+					break;
 				case 2:
-				{
-					tabLichSu.style.display = "none";
-					tabSuCongNhan.style.display = "block";
-					tabSuMenh.style.display = "none";
-				}
-				break;
+					{
+						tabLichSu.style.display = "none";
+						tabSuCongNhan.style.display = "block";
+						tabSuMenh.style.display = "none";
+					}
+					break;
 				case 3:
-				{
-					tabLichSu.style.display = "none";
-					tabSuCongNhan.style.display = "none";
-					tabSuMenh.style.display = "block";
-				}
-				break;
+					{
+						tabLichSu.style.display = "none";
+						tabSuCongNhan.style.display = "none";
+						tabSuMenh.style.display = "block";
+					}
+					break;
 			}
 		}
-
 	</script>
 
 </body>

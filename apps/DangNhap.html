@@ -62,24 +62,27 @@
 			<div class="top-menu">
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-2 center-block">
+						<div class="col-xs-2">
 							<div id="colorlib-logo">
 								<a href="index.html">Starbucks</a>
 							</div>
 						</div>
 						<div class="col-xs-10 text-right menu-1">
 							<ul>
-								<li>
+								<li class="active">
 									<a href="index.html">Trang chủ</a>
 								</li>
 								<li>
 									<a href="shop.html">Danh sách sản phẩm</a>
 								</li>
 								<li>
-									<a href="about.html">Về chúng tôi</a>
+									<a href="NhanVien.html">Nhân viên</a>
 								</li>
-								<li class="active">
-									<a href="DangNhap.html">Đăng nhập</a>
+								<li>
+									<a href="admin.html">Admin</a>
+								</li>
+								<li>
+									<a href="about.html">Về chúng tôi</a>
 								</li>
 							</ul>
 						</div>
@@ -87,19 +90,19 @@
 				</div>
 			</div>
 		</nav>
-		
+
 		<div class="container">
 			<div class="row">
 				<div class="col-md-5 col-md-push-4 text-center" style="margin-top:40px;margin-bottom:40px">
 					<form id="formlogin" method="POST" action="" role="form" onsubmit="return validateForm()">
 						<legend>Đăng Nhập</legend>
-					
+
 						<div class="form-group">
 							<input type="text" id="formID" name="formID" class="form-control" id="ID" placeholder="ID">
 						</div>
 
 						<div class="form-group">
-								<input type="password" id="formPass"  name="formPass" class="form-control" id="PASS" placeholder="Password">
+							<input type="password" id="formPass" name="formPass" class="form-control" id="PASS" placeholder="Password">
 						</div>
 						<button id="btnSubmit" type="submit" class="btn btn-primary">Đăng Nhập</button>
 					</form>
@@ -108,85 +111,85 @@
 		</div>
 
 		<div id="colorlib-subscribe">
-				<div class="overlay"></div>
-				<div class="container">
-					<div class="row text-center">
-						<h2>CÀ PHÊ ESPRESSO CỦA CHÚNG TÔI, LATTE CỦA BẠN</h2>
-					</div>
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row text-center">
+					<h2>CÀ PHÊ ESPRESSO CỦA CHÚNG TÔI, LATTE CỦA BẠN</h2>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<footer id="colorlib-footer" role="contentinfo">
-			<div class="container">
-				<div class="row row-pb-md">
-					<div class="col-md-3 colorlib-widget">
-						<h4>Công ty Cà phê Starbucks</h4>
-						<p>Mỗi tuần Starbucks trên khắp thế giới phục vụ hàng triệu thức uống đến tay khách hàng. Và Starbucks cam kết rằng sẽ
-							phục vụ từng khách hàng duy nhất tại một thời điểm.</p>
-						<p>
-							<ul class="colorlib-social-icons">
-								<li>
-									<a href="#">
-										<i class="icon-twitter"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="icon-facebook"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="icon-linkedin"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="icon-dribbble"></i>
-									</a>
-								</li>
-							</ul>
-						</p>
-					</div>
-					<div class="col-md-3 colorlib-widget">
-						<h4>Customer Care</h4>
-						<p>
-							<ul class="colorlib-footer-links">
-								<li>
-									<a href="#">Contact</a>
-								</li>
-								<li>
-									<a href="#">Returns/Exchange</a>
-								</li>
-								<li>
-									<a href="#">Gift Voucher</a>
-								</li>
-							</ul>
-						</p>
-					</div>
-					<div class="col-md-3 colorlib-widget">
-						<h4>Thông tin</h4>
-						<p>
-							<ul class="colorlib-footer-links">
-								<li>
-									<a href="about.html">Về chúng tôi</a>
-								</li>
-							</ul>
-						</p>
-					</div>
-
-					<div class="col-md-3">
-						<h4>Thông tin nhanh</h4>
-						<ul class="colorlib-footer-links">
-							<li>Giám đốc điều hành: Kevin Johnson (3 thg 4, 2017–)</li>
-							<li>Trụ sở: Seattle, Washington, Hoa Kỳ</li>
-							<li>Nhà sáng lập: Gordon Bowker, Jerry Baldwin, Zev Siegl</li>
+	<footer id="colorlib-footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col-md-3 colorlib-widget">
+					<h4>Công ty Cà phê Starbucks</h4>
+					<p>Mỗi tuần Starbucks trên khắp thế giới phục vụ hàng triệu thức uống đến tay khách hàng. Và Starbucks cam kết rằng sẽ
+						phục vụ từng khách hàng duy nhất tại một thời điểm.</p>
+					<p>
+						<ul class="colorlib-social-icons">
+							<li>
+								<a href="#">
+									<i class="icon-twitter"></i>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<i class="icon-facebook"></i>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<i class="icon-linkedin"></i>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<i class="icon-dribbble"></i>
+								</a>
+							</li>
 						</ul>
-					</div>
+					</p>
+				</div>
+				<div class="col-md-3 colorlib-widget">
+					<h4>Customer Care</h4>
+					<p>
+						<ul class="colorlib-footer-links">
+							<li>
+								<a href="#">Contact</a>
+							</li>
+							<li>
+								<a href="#">Returns/Exchange</a>
+							</li>
+							<li>
+								<a href="#">Gift Voucher</a>
+							</li>
+						</ul>
+					</p>
+				</div>
+				<div class="col-md-3 colorlib-widget">
+					<h4>Thông tin</h4>
+					<p>
+						<ul class="colorlib-footer-links">
+							<li>
+								<a href="about.html">Về chúng tôi</a>
+							</li>
+						</ul>
+					</p>
+				</div>
+
+				<div class="col-md-3">
+					<h4>Thông tin nhanh</h4>
+					<ul class="colorlib-footer-links">
+						<li>Giám đốc điều hành: Kevin Johnson (3 thg 4, 2017–)</li>
+						<li>Trụ sở: Seattle, Washington, Hoa Kỳ</li>
+						<li>Nhà sáng lập: Gordon Bowker, Jerry Baldwin, Zev Siegl</li>
+					</ul>
 				</div>
 			</div>
-		</footer>
+		</div>
+	</footer>
 	</div>
 
 	<div class="gototop js-top">
