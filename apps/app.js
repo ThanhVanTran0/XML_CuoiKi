@@ -19,69 +19,75 @@ function parseCookies(request) {
 }
 
 app.createServer((req, res) => {
-	console.log('Method: ' + req.method + " url: " + req.url);
+	// console.log('Method: ' + req.method + " url: " + req.url);
 	switch (req.method) {
 		case 'POST':
 			{
-				if (req.url === '/DangNhap.html') {
-					var body = ''
-
-					req.on('data', function (data) {
-						body += data;
-					}).on('end', function () {
-						var post = xl_tham_so.parse(body);
-
-						var options = {
-							hostname: 'localhost',
-							port: 3001,
-							path: '/login',
-							method: 'POST',
-							headers: {
-								"username": post.formID,
-								"password": post.formPass
-							}
-						}
-
-						var httpRes;
-						httpRes = app.get(options, (response) => {
+				switch (req.url) {
+					case "/DangNhap.html":
+						{
 							var body = ''
-							response.on('data', (chunk) => {
-								body += chunk;
-							})
 
-							response.on('end', () => {
-								if (response.statusCode == 404) {
-									resErrorPage(res, 'Không thể đăng nhập');
-								} else {
-									var data = JSON.parse(body);
-									console.log('session: ' + data.session);
-									res.writeHead(200, {
-										'Set-Cookie': `session=${data.session}`,
-										'Content-Type': 'text/plain',
-									})
-									if (data.isadmin == false) {
-										res.end("/NhanVien.html");
-									} else {
-										res.end('/admin.html');
+							req.on('data', function (data) {
+								body += data;
+							}).on('end', function () {
+								var post = xl_tham_so.parse(body);
+
+								var options = {
+									hostname: 'localhost',
+									port: 3001,
+									path: '/login',
+									method: 'POST',
+									headers: {
+										"username": post.formID,
+										"password": post.formPass
 									}
 								}
-								return;
+
+								var httpRes;
+								httpRes = app.get(options, (response) => {
+									var body = ''
+									response.on('data', (chunk) => {
+										body += chunk;
+									})
+
+									response.on('end', () => {
+										if (response.statusCode == 404) {
+											resErrorPage(res, 'Không thể đăng nhập');
+										} else {
+											var data = JSON.parse(body);
+											res.writeHead(200, {
+												'Set-Cookie': `session=${data.session}`,
+												'Content-Type': 'text/plain',
+											})
+											if (data.isadmin == false) {
+												res.end("/NhanVien.html");
+											} else {
+												res.end('/admin.html');
+											}
+										}
+										return;
+									})
+								});
+
+								httpRes.end();
+
+								// Trường hợp lỗi
+								httpRes.on('error', function () {
+									resErrorPage(res, 'Không thể kết nối đến server.');
+								});
 							})
-						});
-
-						httpRes.end();
-
-						// Trường hợp lỗi
-						httpRes.on('error', function () {
-							resErrorPage(res, 'Không thể kết nối đến server.');
-						});
-					})
-
-				} else {
-					res.writeHead(404, {
-						'Content-Type': 'text/plain'
-					})
-					res.end('Error');
+						}
+						break;
+						case '/logout':
+						{
+							console.log('Thang logout moi gui len')
+						}
+						break;
+						default:
+						{
+							resErrorPage(res,'Không hỗ trợ đường dẫn');
+						}
 				}
 			}
 			break;
@@ -128,8 +134,8 @@ app.createServer((req, res) => {
 								} else {
 									var data = JSON.parse(body);
 									console.log('body: ' + body);
-									if (data.isadmin === false && req_url === '/admin.html') {
-										resErrorPage(res, 'Tài khoản của bạn không được quyền truy cập trang này.');
+									if (data.isadmin === 'false' && req_url === '/admin.html') {
+										resErrorPage(res, 'Đây là tài khoản nhân viên, bạn không được quyền truy cập trang này.');
 									} else {
 										// Trả về file html
 										// Đọc file theo req gửi từ Client lên
@@ -155,7 +161,7 @@ app.createServer((req, res) => {
 
 						httpRes.end();
 						httpRes.on('error', (err) => {
-							resErrorPage(res,'Không thể kết nối đến server');
+							resErrorPage(res, 'Không thể kết nối đến server');
 							return;
 						})
 					}
@@ -199,7 +205,7 @@ app.createServer((req, res) => {
 			break;
 		default:
 			{
-				resErrorPage(res,'Không hỗ trợ đường dẫn.');
+				resErrorPage(res, 'Không hỗ trợ đường dẫn.');
 			}
 			break;
 	}

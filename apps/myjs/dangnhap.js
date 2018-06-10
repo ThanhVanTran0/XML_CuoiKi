@@ -24,10 +24,11 @@ $('#formlogin').submit(function() {
 		type: 'POST',
 		data : $('#formlogin').serialize(),
 		error: function(error) {
-			alert('Error')
+			alert('Tài khoản hoặc mật khẩu không chính xác.');
 		},
 		success: function(data){
 		  location.href = data;
 		}
 	});
+	return false;
 }) 

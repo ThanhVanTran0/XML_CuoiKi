@@ -7,7 +7,17 @@ var fs = require('fs');
 
 var xmlcache = ''
 
-var sessiontest = 'abcdef';
+var dsSession = []
+
+function ktSession(session) {
+	var length = dsSession.length
+	for(var i =0 ;i<length;i++) {
+		if(session === dsSession[i].session) {
+			return i;
+		}
+	}
+	return -1;
+}
 
 app.createServer((req, res) => {
 	switch (req.method) {
@@ -16,14 +26,7 @@ app.createServer((req, res) => {
 				switch(req.url) {
 					case '/login':
 					{
-						console.log("User: " + req.headers['username']);
-						console.log("Pass: " + req.headers['password']);
-						// var object = {
-						// 	'session':sessiontest,
-						// 	'isadmin':false
-						// }
-						// res.end(JSON.stringify(object));
-
+						console.log("lengthss: " + dsSession.length);
 						//Gửi username và pass cho dal kiểm tra
 						var options = {
 							hostname: 'localhost',
@@ -48,6 +51,8 @@ app.createServer((req, res) => {
 									res.end(body);
 								}else {
 									res.writeHead(200,{'Content-Type':'text/plain'})
+									var data = JSON.parse(body);
+									dsSession.push(data);
 									res.end(body);
 								}
 							})
@@ -63,15 +68,17 @@ app.createServer((req, res) => {
 					break;
 					case '/checksession':
 					{
-						// Goi dal lay session kiem tra
-						// res.writeHead(404, {'Content-Type':'text/plain'});
-						// res.end('Lỗi chứng thực');
-						var object = {
-							'session':sessiontest,
-							'isadmin':false
+						console.log("lengthss2: " + dsSession.length);
+						var vitri = ktSession(req.headers['session']);
+						if(vitri!=-1) {
+							res.writeHead(200,{'Content-Type':'text/plain'});
+							res.end(JSON.stringify(dsSession[vitri]));
 						}
-						res.writeHead(200,{'Content-Type':'text/plain'});
-						res.end(JSON.stringify(object));
+						else {
+							console.log('Lỗi session không trùng khớp.')
+							res.writeHead(404,{'Content-Type':'text/plain'});
+							res.end('Vui lòng logout và đăng nhập lại');
+						}
 					}
 					break;
 					default:
