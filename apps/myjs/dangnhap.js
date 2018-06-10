@@ -1,34 +1,47 @@
-
 function validateForm() {
 
 	var id = document.getElementById('formID').value;
 	var pass = document.getElementById('formPass').value;
 
-	if(id == '') {
+	if (id == '') {
 		alert('Tên đăng nhập không được để trống');
-	}
-	else {
-		if(pass == '' ) {
+	} else {
+		if (pass == '') {
 			alert('Password không được để trống');
-		}
-		else {
+		} else {
 			return true;
 		}
 	}
 	return false;
 }
 
-$('#formlogin').submit(function() {
+function setCookie(cname, cvalue, time) {
+	var d = new Date();
+	d.setTime(d.getTime() + (time * 60 * 60 * 1000));
+	var expires = "expires=" + d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+$('#formlogin').submit(function () {
 	$.ajax({
 		url: $('#formlogin').attr('action'),
 		type: 'POST',
-		data : $('#formlogin').serialize(),
-		error: function(error) {
-			alert('Tài khoản hoặc mật khẩu không chính xác.');
+		data: $('#formlogin').serialize(),
+		error: function (request, status, error) {
+			alert(request.responseText);
 		},
-		success: function(data){
-		  location.href = data;
+		success: function (data) {
+			var data2 = JSON.parse(data);
+			setCookie('session', data2.session, 1);
+			setCookie('name', data2.name, 1);
+			setCookie('sdt', data2.sdt, 1);
+			setCookie('DiaChi', data2.DiaChi, 1);
+			if (data2.isadmin === 'true') {
+				location.href = '/admin.html'
+			} else {
+				location.href = '/NhanVien.html'
+			}
 		}
 	});
 	return false;
-}) 
+})

@@ -53,18 +53,16 @@ app.createServer((req, res) => {
 
 									response.on('end', () => {
 										if (response.statusCode == 404) {
-											resErrorPage(res, 'Không thể đăng nhập');
+											res.writeHead(404, {
+												'Content-Type': 'text/plain'
+											})
+											res.end(body);
 										} else {
 											var data = JSON.parse(body);
 											res.writeHead(200, {
-												'Set-Cookie': `session=${data.session}`,
-												'Content-Type': 'text/plain',
+												'Content-Type': 'text/plain;charset=utf-8',
 											})
-											if (data.isadmin == false) {
-												res.end("/NhanVien.html");
-											} else {
-												res.end('/admin.html');
-											}
+											res.end(body);
 										}
 										return;
 									})
@@ -79,14 +77,24 @@ app.createServer((req, res) => {
 							})
 						}
 						break;
-						case '/logout':
+					case '/logout':
 						{
-							console.log('Thang logout moi gui len')
+							var cookie = parseCookies(req);
+							var session = cookie['session'];
+							if (typeof session != 'undefined') {
+
+							} else {
+								res.writeHead(200, {
+									'Content-Type': 'text/plain'
+								})
+								res.end();
+							}
+
 						}
 						break;
-						default:
+					default:
 						{
-							resErrorPage(res,'Không hỗ trợ đường dẫn');
+							resErrorPage(res, 'Không hỗ trợ đường dẫn');
 						}
 				}
 			}

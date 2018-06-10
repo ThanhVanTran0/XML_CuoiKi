@@ -52,6 +52,10 @@ app.createServer((req, res) => {
 								}else {
 									res.writeHead(200,{'Content-Type':'text/plain'})
 									var data = JSON.parse(body);
+									var object = {
+										'session':data.session,
+										'isadmin':data.isadmin
+									}
 									dsSession.push(data);
 									res.end(body);
 								}
@@ -83,8 +87,7 @@ app.createServer((req, res) => {
 					break;
 					default:
 					{
-						res.writeHead(404,{'Content-Type':'text/plain;charset=utf-8'});
-						res.end('Không hỗ trợ giao thức');
+						resErrorPage(res,"Không hỗ trợ giao thức")
 					}
 					break;
 				}

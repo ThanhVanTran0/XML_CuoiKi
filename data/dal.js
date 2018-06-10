@@ -41,10 +41,12 @@ app.createServer((req, res) => {
 								if (vitri != -1) {
 									var isadmin = dsTaiKhoan[vitri].getAttribute('isadmin');
 									var session = createSession();
-									console.log('Ran session: ' + session)
 									var object = {
 										'session': `${session}`,
-										'isadmin': `${isadmin}`
+										'isadmin': `${isadmin}`,
+										'name': `${dsTaiKhoan[vitri].getAttribute('name')}`,
+										'sdt': `${dsTaiKhoan[vitri].getAttribute('sdt')}`,
+										'DiaChi': `${dsTaiKhoan[vitri].getAttribute('DiaChi')}`
 									}
 									res.writeHead(200,{'Content-Type':'text/plain'})
 									res.end(JSON.stringify(object));
