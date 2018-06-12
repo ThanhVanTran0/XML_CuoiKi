@@ -1,5 +1,59 @@
 var duongDan = 'images/';
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function getDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var today = dd + '/' + mm + '/' + yyyy;
+    return today;
+}
+
+function dienThongTin() {
+
+    $('#NGAY_BAN').val(`${getDate()}`);
+
+    var session = getCookie('session');
+    if (session != "") {
+        var HoTen = getCookie('name')
+        var sdt = getCookie('sdt')
+        var DiaChi = getCookie('DiaChi')
+
+        if (HoTen != "" && sdt != "" && DiaChi != "") {
+            $('#HOTEN').val(`${HoTen}`)
+            $('#SDT').val(`${sdt}`)
+            $('#DIACHI').val(`${DiaChi}`)
+        } else {
+            $('#HOTEN').val("")
+            $('#SDT').val("")
+            $('#DIACHI').val("")
+        }
+
+    }
+}
+
 function getData() {
     var xhttp = new XMLHttpRequest();
     var query = 'http://localhost:3001/DanhSachSanPham';
@@ -18,7 +72,7 @@ function HienThiDanhSachSanPham(Danh_sach_san_pham, table) {
         var GiaBan = Danh_sach_san_pham[i].getAttribute('GiaBan');
         var TamNgung = Danh_sach_san_pham[i].getAttribute('TamNgung');
         var img_src = duongDan + MASP + '.jpg';
-        
+
         // Chỉ hiển thị danh sách các sản phẩm đang bán
         if (TamNgung == "false") {
             var newRow = `<tr>
@@ -35,4 +89,45 @@ function HienThiDanhSachSanPham(Danh_sach_san_pham, table) {
         }
     }
     table.draw();
+}
+
+function LayGiaBan() {
+    var length = g_data.length
+    if (typeof length === 'undefined' || length === 0) {
+        alert('Danh sách rỗng')
+    } else {
+        var MA_SP = $('#MA_SP').val();
+        if (MA_SP === "") {
+            alert('Không được để trống Mã SP')
+        }
+        else {
+            for (var i = 0; i < length; i++) {
+                var ma_sp = g_data[i].getAttribute('MaSP');
+                ma_sp = ma_sp.toUpperCase();
+                MA_SP = MA_SP.toUpperCase();
+                if(MA_SP === ma_sp) {
+                    $('#GIA_BAN').val(g_data[i].getAttribute('GiaBan'))
+                    return;
+                }
+            }
+            alert('Mã SP không có, vui lòng kiểm tra lại');
+        }
+    }
+}
+
+function TinhTien() {
+    var MA_SP = $('#MA_SP').val();
+    if (MA_SP === "") {
+        alert('Không được để trống Mã SP')
+    } else {
+        var SO_LUONG = $('#SO_LUONG').val()
+        if(SO_LUONG == "" || parseInt(SO_LUONG) <= 0 || isNaN(parseInt(SO_LUONG))){
+            alert('Số lượng không được bỏ trống hoặc nhỏ hơn 0');
+        }
+        else {
+            // TOdo
+        }
+    }
+    var NGAYBAN = $('#NGAYBAN').val();
+
 }

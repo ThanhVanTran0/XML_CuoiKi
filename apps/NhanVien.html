@@ -162,44 +162,44 @@
 							<div class="row row-pb-md">
 								<div class="col-md-3">
 									<h4>Tên Nhân Viên</h4>
-									<input type="text" name="" value="Nguyễn Thị Tuyết">
+									<input id="HOTEN" type="text" name="" value="Nguyễn Thị Tuyết">
 								</div>
 
 								<div class="col-md-3">
 									<h4>Số Điện Thoại</h4>
-									<input type="text" name="" value="123456789" placeholder="">
+									<input id="SDT" type="text" name="" value="123456789" placeholder="">
 								</div>
 
 								<div class="col-md-6">
 									<h4>Địa Chỉ</h4>
-									<input type="text" name="" value="ádjafjaksjflasfjklajl" placeholder="">
+									<input id="DIACHI" type="text" name="" value="ádjafjaksjflasfjklajl" placeholder="">
 								</div>
 							</div>
 
 							<div class="row row-pb-md">
 								<div class="col-md-3">
 									<h4>Sản Phẩm</h4>
-									<input type="text" name="" value="" placeholder="Mã SP">
+									<input id="MA_SP" onblur="LayGiaBan()" type="text" name="" value="" placeholder="Mã SP">
 								</div>
 
 								<div class="col-md-3">
 									<h4>Giá bán</h4>
-									<input type="text" name="" value="" placeholder="Giá Bán" disabled="">
+									<input id="GIA_BAN" type="text" name="" value="" placeholder="Giá Bán" disabled="">
 								</div>
 
 								<div class="col-md-2">
 									<h4>Số Lượng</h4>
-									<input type="text" name="" value="" placeholder="Số Lượng">
+									<input id="SO_LUONG" type="text" name="" value="" placeholder="Số Lượng">
 								</div>
 
 								<div class="col-md-2">
 									<h4>Ngày Bán</h4>
-									<input type="date" name="" value="">
+									<input id="NGAY_BAN" type="text" name="" value="" disabled>
 								</div>
 
 								<div class="col-md-2">
 									<h4>&nbsp;</h4>
-									<button type="button" class="btn btn-primary">Tính Tiền</button>
+									<button type="button" onclick="TinhTien()" class="btn btn-primary">Tính Tiền</button>
 								</div>
 							</div>
 
@@ -416,17 +416,20 @@
 	<script src="myjs/logout.js"></script>
 	<script src="myjs/xulytaikhoan.js"></script>
 	<script>
+
+		dienThongTin();
+
 		var g_table_ban;
 		var g_table_da_ban;
 		var g_table_sp;
 
-		var data = getData();
+		var g_data = getData();
 
 		$(document).ready(function () {
 			$('#DS_BAN').DataTable();
 			$('#DS_DA_BAN').DataTable();
 			g_table_sp = $('#DS_SP').DataTable();
-			HienThiDanhSachSanPham(data, g_table_sp);
+			HienThiDanhSachSanPham(g_data, g_table_sp);
 		});
 	</script>
 

@@ -15,12 +15,15 @@ function getCookie(cname) {
 
 var session = getCookie('session');
 if (session === "") {
-    
+    $('#idTaiKhoan').html('Tài Khoản <b class="caret"></b>')
+    $('#idDangNhap').show();
+    $('#idLogOut').hide();
 } else {
     var name = getCookie('name');
     if (name != "")
     {
         $('#idTaiKhoan').html(`${name} <b class="caret"></b>`)
         $('#idDangNhap').hide();
+        $('#idLogOut').show();
     }
 }

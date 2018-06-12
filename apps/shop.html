@@ -95,7 +95,7 @@
 											<a id="idDangNhap" href="DangNhap.html">Đăng nhập</a>
 										</li>
 										<li>
-											<a onclick="Logout()" href="#">Log out</a>
+											<a id="idLogOut" onclick="Logout()" href="#">Log out</a>
 										</li>
 									</ul>
 								</li>
@@ -318,6 +318,9 @@
 	<!-- Stellar Parallax -->
 	<script src="js/jquery.stellar.min.js"></script>
 	<!-- Main -->
+	<script>
+		$('#idLogOut').hide();
+	</script>
 	<script src="js/main.js"></script>
 	<script src="myjs/logout.js"></script>
 	<script src="myjs/xulytaikhoan.js"></script>

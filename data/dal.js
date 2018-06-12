@@ -20,8 +20,10 @@ function ktTaiKhoan(dsTaiKhoan, user, pass) {
 }
 
 function createSession() {
-	return '_' + Math.random().toString(36).substr(2,9);
+	return '_' + Math.random().toString(36).substr(2, 9);
 }
+
+var dsSp = ""
 
 app.createServer((req, res) => {
 	var method = req.method;
@@ -48,7 +50,9 @@ app.createServer((req, res) => {
 										'sdt': `${dsTaiKhoan[vitri].getAttribute('sdt')}`,
 										'DiaChi': `${dsTaiKhoan[vitri].getAttribute('DiaChi')}`
 									}
-									res.writeHead(200,{'Content-Type':'text/plain'})
+									res.writeHead(200, {
+										'Content-Type': 'text/plain'
+									})
 									res.end(JSON.stringify(object));
 								} else {
 									res.writeHead(404, {
@@ -74,12 +78,19 @@ app.createServer((req, res) => {
 				switch (req.url) {
 					case '/DanhSachSanPham':
 						{
-							var xml = layThongTin.get_ds_San_Pham();
+							if (dsSp == "") {
+								dsSp = layThongTin.get_ds_San_Pham();
+							}
 							res.writeHeader(200, {
 								'Content-Type': 'text/xml',
 								'Access-Control-Allow-Origin': '*'
 							});
-							res.end(xml)
+							res.end(dsSp)
+						}
+						break;
+					case '/DanhSachBan':
+						{
+							
 						}
 						break;
 					default:

@@ -1,3 +1,7 @@
+function eraseCookie(name) {   
+    document.cookie = name+'=; Max-Age=-99999999;';  
+}
+
 function Logout() {
     $.ajax({
         url: 'http://localhost:3002/logout',
@@ -6,7 +10,10 @@ function Logout() {
             alert(request.responseText);
         },
         success: function (data) {
-            alert('Đã Logout');
+            eraseCookie('session');
+            eraseCookie('name');
+            eraseCookie('sdt');
+            eraseCookie('DiaChi');
             location.href = '/index.html';
         }
     })

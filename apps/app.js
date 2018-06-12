@@ -82,6 +82,40 @@ app.createServer((req, res) => {
 							var cookie = parseCookies(req);
 							var session = cookie['session'];
 							if (typeof session != 'undefined') {
+								var options = {
+									hostname: 'localhost',
+									port: 3001,
+									path: '/logout',
+									method: 'POST',
+									headers: {
+										"session": session
+									}
+								}
+
+								var httpRes = app.get(options,function(response) {
+									var body = ''
+									response.on('data', (chunk) => {
+										body += chunk;
+									})
+
+									response.on('end',function() {
+										if(response.statusCode == 404) {
+											res.writeHead(404,{'Content-Type':'text/plain'});
+											res.end('Lỗi');
+										}
+										else {
+											console.log('Vo end tra ve kq: ' + body)
+											res.writeHead(200,{'Content-Type':'text/plain'})
+											res.end('OK');
+										}
+									})
+								})
+
+								httpRes.end();
+								httpRes.on('error',function() {
+									res.writeHead(404,{'Content-Type':'text/plain;charset=utf-8'})
+									res.end('Lỗi kết nối servser.')
+								})
 
 							} else {
 								res.writeHead(200, {
