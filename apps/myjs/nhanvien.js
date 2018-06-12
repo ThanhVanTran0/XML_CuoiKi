@@ -63,6 +63,20 @@ function getData() {
     return Danh_sach_san_pham;
 }
 
+function getDanhSachBan() {
+    $.ajax({
+		url: 'http://localhost:3001/DanhSachBan',
+        type: 'GET',
+		error: function (request, status, error) {
+			alert(request.responseText);
+		},
+		success: function (data) {
+            alert('Thanh cong')
+		}
+	});
+    return 0;
+}
+
 function HienThiDanhSachSanPham(Danh_sach_san_pham, table) {
     var length = Danh_sach_san_pham.length;
     table.clear().draw();
@@ -122,7 +136,7 @@ function TinhTien() {
     } else {
         var SO_LUONG = $('#SO_LUONG').val()
         if(SO_LUONG == "" || parseInt(SO_LUONG) <= 0 || isNaN(parseInt(SO_LUONG))){
-            alert('Số lượng không được bỏ trống hoặc nhỏ hơn 0');
+            alert('Số lượng không được bỏ trống, là số nguyên lớn hơn 0');
         }
         else {
             // TOdo

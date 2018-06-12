@@ -92,28 +92,33 @@ app.createServer((req, res) => {
 									}
 								}
 
-								var httpRes = app.get(options,function(response) {
+								var httpRes = app.get(options, function (response) {
 									var body = ''
 									response.on('data', (chunk) => {
 										body += chunk;
 									})
 
-									response.on('end',function() {
-										if(response.statusCode == 404) {
-											res.writeHead(404,{'Content-Type':'text/plain'});
+									response.on('end', function () {
+										if (response.statusCode == 404) {
+											res.writeHead(404, {
+												'Content-Type': 'text/plain'
+											});
 											res.end('Lỗi');
-										}
-										else {
+										} else {
 											console.log('Vo end tra ve kq: ' + body)
-											res.writeHead(200,{'Content-Type':'text/plain'})
+											res.writeHead(200, {
+												'Content-Type': 'text/plain'
+											})
 											res.end('OK');
 										}
 									})
 								})
 
 								httpRes.end();
-								httpRes.on('error',function() {
-									res.writeHead(404,{'Content-Type':'text/plain;charset=utf-8'})
+								httpRes.on('error', function () {
+									res.writeHead(404, {
+										'Content-Type': 'text/plain;charset=utf-8'
+									})
 									res.end('Lỗi kết nối servser.')
 								})
 
@@ -179,22 +184,26 @@ app.createServer((req, res) => {
 									if (data.isadmin === 'false' && req_url === '/admin.html') {
 										resErrorPage(res, 'Đây là tài khoản nhân viên, bạn không được quyền truy cập trang này.');
 									} else {
-										// Trả về file html
-										// Đọc file theo req gửi từ Client lên
-										fs.readFile(__dirname + req_url, (err, data) => {
-											if (err) {
-												// Xử lý phần tìm không thấy resource ở Server
-												console.log('==> Error: ' + err)
-												console.log('==> Error 404: file not found ' + res.url)
+										if (data.isadmin === 'true' && req_url === '/NhanVien.html') {
+											resErrorPage(res,'Tài khoản không có quyền truy cập trang này.')
+										} else {
+											// Trả về file html
+											// Đọc file theo req gửi từ Client lên
+											fs.readFile(__dirname + req_url, (err, data) => {
+												if (err) {
+													// Xử lý phần tìm không thấy resource ở Server
+													console.log('==> Error: ' + err)
+													console.log('==> Error 404: file not found ' + res.url)
 
-												// Set Header của res thành 404 - Not found (thông báo lỗi hiển thị cho Client)
-												resErrorPage(res, "");
-											} else {
-												// Set Header cho res
-												res.setHeader('Content-type', 'text/html');
-												res.end(data);
-											}
-										})
+													// Set Header của res thành 404 - Not found (thông báo lỗi hiển thị cho Client)
+													resErrorPage(res, "");
+												} else {
+													// Set Header cho res
+													res.setHeader('Content-type', 'text/html');
+													res.end(data);
+												}
+											})
+										}
 									}
 								}
 							});

@@ -122,6 +122,11 @@ app.createServer((req, res) => {
 							res.end("OK");
 						}
 						break;
+					case 'TinhTien':
+						{
+
+						}
+						break;
 					default:
 						{
 							resErrorPage(res, "Không hỗ trợ giao thức")
@@ -167,43 +172,49 @@ app.createServer((req, res) => {
 					case '/DanhSachBan':
 						{
 							var session = req.headers['session']
-							var index = ktSession(session);
-							if (index != -1) {
-								var options = {
-									hostname: 'localhost',
-									port: 3000,
-									path: '/DanhSachBan',
-									method: 'GET'
-								}
+							console.log('test get session: ' + session);
+							res.writeHeader(200, {
+								'Content-Type': 'text/xml',
+								'Access-Control-Allow-Origin': '*'
+							})
+							res.end('aaasdsad');
+							// var index = ktSession(session);
+							// if (index != -1) {
+							// 	var options = {
+							// 		hostname: 'localhost',
+							// 		port: 3000,
+							// 		path: '/DanhSachBan',
+							// 		method: 'GET'
+							// 	}
 
-								var httpRes = app.get(options, function (response) {
-									var body = ''
-									response.on('data', (chunk) => {
-										body += chunk;
-									}).on('end', () => {
-										res.writeHeader(200, {
-											'Content-Type': 'text/xml',
-											'Access-Control-Allow-Origin': '*'
-										})
-										res.end(body);
-										return;
-									});
+							// 	var httpRes = app.get(options, function (response) {
+							// 		var body = ''
+							// 		response.on('data', (chunk) => {
+							// 			body += chunk;
+							// 		}).on('end', () => {
+							// 			res.writeHeader(200, {
+							// 				'Content-Type': 'text/xml',
+							// 				'Access-Control-Allow-Origin': '*'
+							// 			})
+							// 			res.end(body);
+							// 			return;
+							// 		});
 
-								})
-								httpRes.end();
+							// 	})
+							// 	httpRes.end();
 
-								httpRes.on('error', function () {
-									res.writeHead(404, {
-										'Content-Type': 'text/plain;charset=utf-8'
-									});
-									res.end('Máy chủ không phản hồi')
-								})
-							} else {
-								res.writeHead(404, {
-									'Content-Type': 'text/plain;charset=utf-8'
-								})
-								res.end('Vui lòng đăng nhập lại');
-							}
+							// 	httpRes.on('error', function () {
+							// 		res.writeHead(404, {
+							// 			'Content-Type': 'text/plain;charset=utf-8'
+							// 		});
+							// 		res.end('Máy chủ không phản hồi')
+							// 	})
+							// } else {
+							// 	res.writeHead(404, {
+							// 		'Content-Type': 'text/plain;charset=utf-8'
+							// 	})
+							// 	res.end('Vui lòng đăng nhập lại');
+							// }
 						}
 						break;
 					default:

@@ -33,16 +33,16 @@ function HienThiDanhSachSanPham(Danh_sach_san_pham,table) {
 								<img src="${img_src}" alt="" width="60px" height="60px">
 							</div>
 						</td>
-						<td>${MASP}</td>
+						<td id='MA_SP'>${MASP}</td>
 						<td>${Ten}</td>
 						<td>
-							<input type="text" name="" id="" value="${GiaBan}">
+							<input class='GIA_BAN' type="text" name="" id="" value="${GiaBan}">
 						</td>
 						<td>
-							<input type="checkbox" name="" id="" ${tinh_trang}>
+							<input class='TINH_TRANG' type="checkbox" name="" id="" ${tinh_trang}>
 						</td>
 						<td>
-							<button type="button" class="btn btn-primary" disabled>Cập Nhật</button>
+							<button type="button" class="btn btn-primary" id='CAP_NHAT' disabled>Cập Nhật</button>
 						</td>
 					</tr>`;
 		table.row.add($(newRow));
