@@ -3,6 +3,7 @@ const xml2js = require("xml2js");
 const DOMParser = require('xmldom').DOMParser;
 
 var path = __dirname + '/../San_Pham';
+var pathPBH = __dirname +'/../Phieu_Ban_hang'
 
 var ds_SanPham = [];
 
@@ -29,8 +30,20 @@ var get_tai_khoan = () => {
     return Du_Lieu.getElementsByTagName('TaiKhoan');
 }
 
+var get_danh_sach_ban = (filename) => {
+    var filePath = pathPBH + "/" + filename;
+    var data = null;
+    try {
+        data = fs.readFileSync(filePath,"utf-8");
+    } catch (error) {
+        return null        
+    }
+    return data;
+}
+
 module.exports = {
     get_ds_San_Pham: get_ds_San_Pham,
-    get_tai_khoan: get_tai_khoan
+    get_tai_khoan: get_tai_khoan,
+    get_danh_sach_ban: get_danh_sach_ban
 
 }

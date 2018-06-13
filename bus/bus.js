@@ -7,6 +7,8 @@ var fs = require('fs');
 
 var dsSession = []
 
+var idCache = ''
+
 function ktSession(session) {
 	var length = dsSession.length
 	for (var i = 0; i < length; i++) {
@@ -38,6 +40,11 @@ function deleteSession(session) {
 }
 
 app.createServer((req, res) => {
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+	res.setHeader('Access-Control-Allow-Headers', 'Content-type');
+	res.setHeader('Access-Control-Allow-Headers', 'X-Signature');
+	res.setHeader('Access-Control-Allow-Headers', 'X-Key');
 	switch (req.method) {
 		case 'POST':
 			{
@@ -79,6 +86,7 @@ app.createServer((req, res) => {
 											'isadmin': data.isadmin
 										}
 										dsSession.push(data);
+										idCache = req.headers['username']
 										res.end(body);
 									}
 								})
@@ -119,12 +127,27 @@ app.createServer((req, res) => {
 							res.writeHead(200, {
 								'Content-Type': 'text/plain'
 							});
+							idCache = ''
 							res.end("OK");
 						}
 						break;
-					case 'TinhTien':
+					case '/TinhTien':
 						{
 
+						}
+						break;
+					case '/CapNhat':
+						{
+							// Kiem tra session truowc
+							var body = ''
+
+							req.on('data',function(chunk){
+								body += chunk;
+							})
+
+							req.on('end',function() {
+								// todo
+							})
 						}
 						break;
 					default:
@@ -137,6 +160,7 @@ app.createServer((req, res) => {
 			break;
 		case 'GET':
 			{
+				console.log(req.url)
 				switch (req.url) {
 					case '/DanhSachSanPham':
 						{
@@ -171,19 +195,34 @@ app.createServer((req, res) => {
 						break;
 					case '/DanhSachBan':
 						{
-							var session = req.headers['session']
-							console.log('test get session: ' + session);
+							console.log(req.headers['session'])
+							var body = ''
+
+							req.on('data', function (chunk) {
+								body += chunk;
+							})
+
+							req.on('end', function () {
+								console.log('Body: ' + body)
+							})
+
 							res.writeHeader(200, {
 								'Content-Type': 'text/xml',
 								'Access-Control-Allow-Origin': '*'
 							})
-							res.end('aaasdsad');
+							res.end('asadasd');
+
+							// var session = req.headers['session']
+							// console.log('test get session: ' + session);
 							// var index = ktSession(session);
 							// if (index != -1) {
 							// 	var options = {
 							// 		hostname: 'localhost',
 							// 		port: 3000,
 							// 		path: '/DanhSachBan',
+							// 		headers: {
+							// 			filename: idCache
+							// 		},
 							// 		method: 'GET'
 							// 	}
 
@@ -192,12 +231,16 @@ app.createServer((req, res) => {
 							// 		response.on('data', (chunk) => {
 							// 			body += chunk;
 							// 		}).on('end', () => {
-							// 			res.writeHeader(200, {
-							// 				'Content-Type': 'text/xml',
-							// 				'Access-Control-Allow-Origin': '*'
-							// 			})
-							// 			res.end(body);
-							// 			return;
+							// 			if (response.statusCode === 404) {
+							// 				res.writeHead(404,{'Content-Type':'text/plain'})
+							// 				res.end('Không thể lấy dữ liệu');
+							// 			} else {
+							// 				res.writeHeader(200, {
+							// 					'Content-Type': 'text/xml',
+							// 					'Access-Control-Allow-Origin': '*'
+							// 				})
+							// 				res.end(body);
+							// 			}
 							// 		});
 
 							// 	})

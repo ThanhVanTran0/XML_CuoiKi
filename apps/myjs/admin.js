@@ -1,5 +1,50 @@
 var duongDan = 'images/';
 
+$(document).ready(function () {
+	g_table = $('#DS_SP').DataTable();
+	HienThiDanhSachSanPham(data, g_table);
+
+	$('input.GIA_BAN').blur(function () {
+		$(this).parent().parent().find('button#CAP_NHAT').removeAttr('disabled')
+	})
+
+	$('input.TINH_TRANG').click(function () {
+		$(this).parent().parent().find('button#CAP_NHAT').removeAttr('disabled')
+	})
+
+	$('button#CAP_NHAT').click(function () {
+		var parent = $(this).parent().parent();
+		var GIA_BAN = parent.find('input.GIA_BAN').val();
+		if (GIA_BAN == "" || isNaN(parseInt(GIA_BAN)) || parseInt(GIA_BAN) <= 0) {
+			alert('Gía bán là số nguyên lớn hơn 0')
+		} else {
+			var id = parent.find('td#MA_SP')[0].innerText;
+			var TINH_TRANG = parent.find('input.TINH_TRANG')[0]
+			var TAM_NGUNG = false
+			if (TINH_TRANG.checked == true) {
+				TAM_NGUNG = true
+			}
+			console.log('id: ' + id + ' gb: ' + GIA_BAN + ' tt: ' + TAM_NGUNG);
+
+			// $.ajax({
+			// 	url: 'http://localhost:3001/TinhTien',
+			// 	method: 'POST',
+			// 	data: {
+
+			// 	},
+			// 	error: function (request, status, error) {
+
+			// 	},
+			// 	success: function(data) {
+
+			// 	}
+			// })
+
+			parent.find('button#CAP_NHAT').attr('disabled', true)
+		}
+	})
+});
+
 function getData() {
 	var xhttp = new XMLHttpRequest();
 	var query = 'http://localhost:3001/DanhSachSanPham';
@@ -9,7 +54,7 @@ function getData() {
 	return Danh_sach_san_pham;
 }
 
-function HienThiDanhSachSanPham(Danh_sach_san_pham,table) {
+function HienThiDanhSachSanPham(Danh_sach_san_pham, table) {
 	var length = Danh_sach_san_pham.length;
 	table.clear().draw();
 	for (var i = 0; i < length; i++) {
@@ -20,10 +65,9 @@ function HienThiDanhSachSanPham(Danh_sach_san_pham,table) {
 		var img_src = duongDan + MASP + '.jpg';
 
 		var tinh_trang;
-		if(TamNgung=="false") {
+		if (TamNgung == "false") {
 			tinh_trang = '';
-		}
-		else {
+		} else {
 			tinh_trang = 'checked';
 		}
 
@@ -83,7 +127,7 @@ function TaoDanhSachLoaiSP(Danh_sach_san_pham) {
 function LoaiSPThayDoi() {
 	var LOAI_SP = document.getElementById('inputLoaiSP').value;
 	var Danh_sach_moi = TaoDanhSachSPTheoLoai(data, LOAI_SP);
-	HienThiDanhSachSanPham(Danh_sach_moi,g_table)
+	HienThiDanhSachSanPham(Danh_sach_moi, g_table)
 }
 
 //Lấy ra danh sách SP theo loại SP

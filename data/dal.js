@@ -24,6 +24,7 @@ function createSession() {
 }
 
 var dsSp = ""
+var phieuBanCache = null
 
 app.createServer((req, res) => {
 	var method = req.method;
@@ -47,8 +48,6 @@ app.createServer((req, res) => {
 										'session': `${session}`,
 										'isadmin': `${isadmin}`,
 										'name': `${dsTaiKhoan[vitri].getAttribute('name')}`,
-										'sdt': `${dsTaiKhoan[vitri].getAttribute('sdt')}`,
-										'DiaChi': `${dsTaiKhoan[vitri].getAttribute('DiaChi')}`
 									}
 									res.writeHead(200, {
 										'Content-Type': 'text/plain'
@@ -90,7 +89,24 @@ app.createServer((req, res) => {
 						break;
 					case '/DanhSachBan':
 						{
+							var filename = req.headers['filename'];
+							filename += "_Phieu_Ban.xml"
+							if(phieuBanCache == null)
+								phieuBanCache = layThongTin.get_danh_sach_ban(filename);
 							
+							if (phieuBanCache == null) {
+								res.writeHead(404, {
+									'Content-Type': 'text/plain',
+									'Access-Control-Allow-Origin': '*'
+								})
+								res.end('File lỗi')
+								return;
+							}
+							res.writeHeader(200, {
+								'Content-Type': 'text/xml',
+								'Access-Control-Allow-Origin': '*'
+							});
+							res.end(phieuBanCache)
 						}
 						break;
 					default:

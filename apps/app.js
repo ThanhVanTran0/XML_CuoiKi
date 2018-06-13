@@ -149,7 +149,7 @@ app.createServer((req, res) => {
 					var session = cookie['session'];
 
 					//Check session dang nhap
-					if (typeof session === 'undefined') {
+					if (typeof session === 'undefined' || session ==="#") {
 						res.writeHead(302, {
 							'Content-Type': 'text/html',
 							'Location': '/DangNhap.html'
@@ -177,7 +177,14 @@ app.createServer((req, res) => {
 
 							response.on('end', () => {
 								if (response.statusCode == 404) {
-									resErrorPage(res, body)
+									console.log('Body' + body)
+									res.writeHead(302, {
+										'Content-Type': 'text/plain',
+										'Location':'/',
+										'Set-Cookie':'session=#'
+									});
+									res.end();
+									return;
 								} else {
 									var data = JSON.parse(body);
 									console.log('body: ' + body);
@@ -185,7 +192,7 @@ app.createServer((req, res) => {
 										resErrorPage(res, 'Đây là tài khoản nhân viên, bạn không được quyền truy cập trang này.');
 									} else {
 										if (data.isadmin === 'true' && req_url === '/NhanVien.html') {
-											resErrorPage(res,'Tài khoản không có quyền truy cập trang này.')
+											resErrorPage(res, 'Tài khoản không có quyền truy cập trang này.')
 										} else {
 											// Trả về file html
 											// Đọc file theo req gửi từ Client lên

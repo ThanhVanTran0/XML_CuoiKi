@@ -284,38 +284,6 @@
 		var data = getData();
 		TaoDanhSachLoaiSP(data);
 		var g_table;
-
-		$(document).ready(function () {
-			g_table = $('#DS_SP').DataTable();
-			HienThiDanhSachSanPham(data, g_table);
-
-			$('input.GIA_BAN').blur(function () {
-				$(this).parent().parent().find('button#CAP_NHAT').removeAttr('disabled')
-			})
-
-			$('input.TINH_TRANG').click(function () {
-				$(this).parent().parent().find('button#CAP_NHAT').removeAttr('disabled')
-			})
-
-			$('button#CAP_NHAT').click(function () {
-				var parent = $(this).parent().parent();
-				var GIA_BAN = parent.find('input.GIA_BAN').val();
-				if (GIA_BAN == "" || isNaN(parseInt(GIA_BAN)) || parseInt(GIA_BAN) <= 0) {
-					alert('Gía bán là số nguyên lớn hơn 0')
-				} else {
-					var id = parent.find('td#MA_SP')[0].innerText;
-					var TINH_TRANG = parent.find('input.TINH_TRANG')[0]
-					var TAM_NGUNG = false
-					if(TINH_TRANG.checked == true) {
-						TAM_NGUNG = true
-					}
-					console.log('id: '+ id + ' gb: ' + GIA_BAN + ' tt: ' + TAM_NGUNG);
-
-					alert('dacap nhat')
-					parent.find('button#CAP_NHAT').attr('disabled',true)
-				}
-			})
-		});
 	</script>
 
 </body>

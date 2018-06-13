@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DanhSachTaiKhoan>
-	<TaiKhoan id="thanh" name="Trần Văn Thanh" sdt = "0123456789" DiaChi ="TP. Hồ Chí Minh" password="thanh123" isadmin="false"/>
-	<TaiKhoan id="thang" password="thang123" isadmin="false" name="Nguyễn Hiếu Thắng" sdt = "145236982" DiaChi ="TP. Hồ Chí Minh"/>
-	<TaiKhoan id="huynguyen" password="huy789" isadmin="true" name="Nguyễn Văn Huy" sdt = "12546982" DiaChi ="TP. Hồ Chí Minh"/>
+	<TaiKhoan id="thanh" name="Trần Văn Thanh" password="thanh123" isadmin="false"/>
+	<TaiKhoan id="thang" password="thang123" isadmin="false" name="Nguyễn Hiếu Thắng"/>
+	<TaiKhoan id="huynguyen" password="huy789" isadmin="true" name="Nguyễn Văn Huy"/>
 </DanhSachTaiKhoan>

@@ -12,8 +12,6 @@ function Logout() {
         success: function (data) {
             eraseCookie('session');
             eraseCookie('name');
-            eraseCookie('sdt');
-            eraseCookie('DiaChi');
             location.href = '/index.html';
         }
     })

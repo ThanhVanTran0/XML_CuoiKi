@@ -64,16 +64,22 @@ function getData() {
 }
 
 function getDanhSachBan() {
-    $.ajax({
-		url: 'http://localhost:3001/DanhSachBan',
-        type: 'GET',
-		error: function (request, status, error) {
-			alert(request.responseText);
-		},
-		success: function (data) {
-            alert('Thanh cong')
-		}
-	});
+    // $.ajax({
+    //     type: "GET",
+    //     cache: false,
+    //     url: 'http://localhost:3001/DanhSachBan',
+    //     crossDomain: true,
+    //     dataType: "json",
+    //     // beforeSend: function(request) {
+    //     //     request.setRequestHeader("session", 'asdasdas');
+    //     // },
+    //     error: function () {
+    //         console.log("Error!");
+    //     },
+    //     success: function (jsonarray) {
+    //         console.log("OK - Hãy xử lý data như bạn mong muốn");
+    //     }
+    // });
     return 0;
 }
 
@@ -113,13 +119,12 @@ function LayGiaBan() {
         var MA_SP = $('#MA_SP').val();
         if (MA_SP === "") {
             alert('Không được để trống Mã SP')
-        }
-        else {
+        } else {
             for (var i = 0; i < length; i++) {
                 var ma_sp = g_data[i].getAttribute('MaSP');
                 ma_sp = ma_sp.toUpperCase();
                 MA_SP = MA_SP.toUpperCase();
-                if(MA_SP === ma_sp) {
+                if (MA_SP === ma_sp) {
                     $('#GIA_BAN').val(g_data[i].getAttribute('GiaBan'))
                     return;
                 }
@@ -135,10 +140,9 @@ function TinhTien() {
         alert('Không được để trống Mã SP')
     } else {
         var SO_LUONG = $('#SO_LUONG').val()
-        if(SO_LUONG == "" || parseInt(SO_LUONG) <= 0 || isNaN(parseInt(SO_LUONG))){
+        if (SO_LUONG == "" || parseInt(SO_LUONG) <= 0 || isNaN(parseInt(SO_LUONG))) {
             alert('Số lượng không được bỏ trống, là số nguyên lớn hơn 0');
-        }
-        else {
+        } else {
             // TOdo
         }
     }

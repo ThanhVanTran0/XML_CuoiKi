@@ -34,8 +34,6 @@ $('#formlogin').submit(function () {
 			var data2 = JSON.parse(data);
 			setCookie('session', data2.session, 1);
 			setCookie('name', data2.name, 1);
-			setCookie('sdt', data2.sdt, 1);
-			setCookie('DiaChi', data2.DiaChi, 1);
 			if (data2.isadmin === 'true') {
 				location.href = '/admin.html'
 			} else {

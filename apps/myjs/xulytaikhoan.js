@@ -14,7 +14,7 @@ function getCookie(cname) {
 }
 
 var session = getCookie('session');
-if (session === "") {
+if (session === "" || session === "#") {
     $('#idTaiKhoan').html('Tài Khoản <b class="caret"></b>')
     $('#idDangNhap').show();
     $('#idLogOut').hide();
