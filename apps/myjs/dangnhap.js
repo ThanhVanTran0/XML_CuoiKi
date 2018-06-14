@@ -25,7 +25,7 @@ function setCookie(cname, cvalue, time) {
 $('#formlogin').submit(function () {
 	$.ajax({
 		url: $('#formlogin').attr('action'),
-		type: 'POST',
+		method: 'POST',
 		data: $('#formlogin').serialize(),
 		error: function (request, status, error) {
 			alert(request.responseText);

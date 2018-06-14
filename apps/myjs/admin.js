@@ -1,52 +1,23 @@
 var duongDan = 'images/';
 
+function getCookie(cname) {
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for (var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
+}
+
 $(document).ready(function () {
 	g_table = $('#DS_SP').DataTable();
 	HienThiDanhSachSanPham(data, g_table);
-
-	$('input.GIA_BAN').blur(function () {
-		$(this).parent().parent().find('button#CAP_NHAT').removeAttr('disabled')
-	})
-
-	$('input.TINH_TRANG').click(function () {
-		$(this).parent().parent().find('button#CAP_NHAT').removeAttr('disabled')
-	})
-
-	$('button#CAP_NHAT').click(function () {
-		console.log('dang click')
-		var parent = $(this).parent().parent();
-		var GIA_BAN = parent.find('input.GIA_BAN').val();
-		if (GIA_BAN == "" || isNaN(parseInt(GIA_BAN)) || parseInt(GIA_BAN) <= 0) {
-			alert('Gía bán là số nguyên lớn hơn 0')
-		} else {
-			var id = parent.find('td#MA_SP')[0].innerText;
-			var TINH_TRANG = parent.find('input.TINH_TRANG')[0]
-			var TAM_NGUNG = false
-			if (TINH_TRANG.checked == true) {
-				TAM_NGUNG = true
-			}
-			console.log('id: ' + id + ' gb: ' + GIA_BAN + ' tt: ' + TAM_NGUNG);
-
-			$.ajax({
-				url: 'http://localhost:3001/CapNhat',
-				method: 'POST',
-				// data: {
-				// 	'MA_SP':MA_SP,
-				// 	'GIA_BAN':GIA_BAN,
-				// 	'TAM_NGUNG':TAM_NGUNG
-				// },
-				error: function (request, status, error) {
-
-				},
-				success: function(data) {
-
-				}
-			})
-
-			parent.find('button#CAP_NHAT').attr('disabled', true)
-			return false;
-		}
-	})
 });
 
 function getData() {
@@ -57,6 +28,53 @@ function getData() {
 	var Danh_sach_san_pham = xhttp.responseXML.getElementsByTagName('SanPham');
 	return Danh_sach_san_pham;
 }
+
+function ipOnBlur(element) {
+	$(element).parent().parent().find('button#CAP_NHAT').removeAttr('disabled')
+}
+
+function ipClick(element) {
+	$(element).parent().parent().find('button#CAP_NHAT').removeAttr('disabled')
+}
+
+function btnClick(element) {
+	var parent = $(element).parent().parent();
+	var GIA_BAN = parent.find('input.GIA_BAN').val();
+	if (GIA_BAN == "" || isNaN(parseInt(GIA_BAN)) || parseInt(GIA_BAN) <= 0) {
+		alert('Gía bán là số nguyên lớn hơn 0')
+	} else {
+		var id = parent.find('td#MA_SP')[0].innerText;
+		var TINH_TRANG = parent.find('input.TINH_TRANG')[0]
+		var TAM_NGUNG = false
+		if (TINH_TRANG.checked == true) {
+			TAM_NGUNG = true
+		}
+		console.log('id: ' + id + ' gb: ' + GIA_BAN + ' tt: ' + TAM_NGUNG);
+		var session = getCookie('session')
+		var data = {
+			'MA_SP': id,
+			'GIA_BAN': GIA_BAN,
+			'TAM_NGUNG': TAM_NGUNG,
+			'session': session
+		}
+		$.ajax({
+			url: 'http://localhost:3001/CapNhat',
+			method: 'POST',
+			dataType: 'text',
+			data: JSON.stringify(data),
+			error: function (request, status, error) {
+				alert(request.responseText);
+			},
+			success: function (data) {
+				alert(data);
+				parent.find('button#CAP_NHAT').attr('disabled', true)
+				location.reload();
+			}
+		})
+		return false;
+	}
+}
+
 
 function HienThiDanhSachSanPham(Danh_sach_san_pham, table) {
 	var length = Danh_sach_san_pham.length;
@@ -84,13 +102,13 @@ function HienThiDanhSachSanPham(Danh_sach_san_pham, table) {
 						<td id='MA_SP'>${MASP}</td>
 						<td>${Ten}</td>
 						<td>
-							<input class='GIA_BAN' type="text" name="" id="" value="${GiaBan}">
+							<input class='GIA_BAN'  onblur="ipOnBlur(this)" type="text" name="" id="" value="${GiaBan}">
 						</td>
 						<td>
-							<input class='TINH_TRANG' type="checkbox" name="" id="" ${tinh_trang}>
+							<input class='TINH_TRANG' onclick="ipClick(this)" type="checkbox" name="" id="" ${tinh_trang}>
 						</td>
 						<td>
-							<button type="button" class="btn btn-primary" id='CAP_NHAT' disabled>Cập Nhật</button>
+							<button type="button" onclick = "btnClick(this)" class="btn btn-primary" id='CAP_NHAT' disabled>Cập Nhật</button>
 						</td>
 					</tr>`;
 		table.row.add($(newRow));

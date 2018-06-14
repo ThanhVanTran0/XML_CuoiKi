@@ -129,17 +129,64 @@ app.createServer((req, res) => {
 						break;
 					case '/CapNhat':
 						{
-							console.log('Vo cap nhat')
-							// Kiem tra session truowc
 							var body = ''
 
-							req.on('data',function(chunk){
+							req.on('data', function (chunk) {
 								body += chunk;
 							})
 
-							req.on('end',function() {
-								// var data = JSON.parse(body);
+							req.on('end', function () {
 								console.log(body)
+								var data = JSON.parse(body);
+								var session = data.session;
+								var index = ktSession(session)
+								if (index != -1) {
+									var options = {
+										hostname: 'localhost',
+										port: 3000,
+										path: '/CapNhat',
+										method: 'POST',
+										headers: {
+											'Content-Type': 'text/plain',
+											'Access-Control-Allow-Origin': '*'
+										}
+									}
+
+									var httpRes = app.request(options, function (response) {
+										var body = ''
+										response.on('data', (chunk) => {
+											body += chunk;
+										}).on('end', () => {
+											if (response.statusCode === 404) {
+												res.writeHead(404, {
+													'Content-Type': 'text/plain'
+												})
+												res.end(body);
+											} else {
+												res.writeHeader(200, {
+													'Content-Type': 'text/plain',
+													'Access-Control-Allow-Origin': '*'
+												})
+												res.end(body);
+											}
+										});
+
+									})
+									httpRes.write(body);
+									httpRes.end();
+
+									httpRes.on('error', function () {
+										res.writeHead(404, {
+											'Content-Type': 'text/plain;charset=utf-8'
+										});
+										res.end('Máy chủ không phản hồi')
+									})
+								} else {
+									res.writeHead(404, {
+										'Content-Type': 'text/plain;charset=utf-8'
+									})
+									res.end('Vui lòng đăng nhập lại');
+								}
 							})
 						}
 						break;
@@ -208,7 +255,9 @@ app.createServer((req, res) => {
 										body += chunk;
 									}).on('end', () => {
 										if (response.statusCode === 404) {
-											res.writeHead(404,{'Content-Type':'text/plain'})
+											res.writeHead(404, {
+												'Content-Type': 'text/plain'
+											})
 											res.end('Không thể lấy dữ liệu');
 										} else {
 											res.writeHeader(200, {

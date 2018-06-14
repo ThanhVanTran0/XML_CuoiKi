@@ -1,4 +1,5 @@
 var layThongTin = require('./services/laythongtin.js')
+var luuDuLieu = require('./services/luuDuLieu.js')
 
 var app = require('http');
 var url = require('url');
@@ -24,7 +25,6 @@ function createSession() {
 }
 
 var dsSp = ""
-var phieuBanCache = null
 
 app.createServer((req, res) => {
 	var method = req.method;
@@ -48,7 +48,7 @@ app.createServer((req, res) => {
 										'session': `${session}`,
 										'isadmin': `${isadmin}`,
 										'name': `${dsTaiKhoan[vitri].getAttribute('name')}`,
-										'id':dsTaiKhoan[vitri].getAttribute('id')
+										'id': dsTaiKhoan[vitri].getAttribute('id')
 									}
 									res.writeHead(200, {
 										'Content-Type': 'text/plain'
@@ -65,6 +65,38 @@ app.createServer((req, res) => {
 								'Content-Type': 'text/plain;charset=utf-8'
 							});
 							res.end();
+						}
+						break;
+					case '/CapNhat':
+						{
+							var body = ''
+
+							req.on('data', function (chunk) {
+								body += chunk;
+							})
+
+							req.on('end', function () {
+								var data = JSON.parse(body);
+								console.log(data)
+								var check = luuDuLieu.thay_Doi_San_Pham(data);
+								
+								if(check == true) {
+									dsSp = ""
+									console.log(dsSp)
+									res.writeHead(200, {
+										'Content-Type': 'text/plain',
+										'Access-Control-Allow-Origin': '*'
+									});
+									res.end('Thay đổi thành công.')
+								}
+								else {
+									res.writeHead(404, {
+										'Content-Type': 'text/plain',
+										'Access-Control-Allow-Origin': '*'
+									});
+									res.end('Không thể thay đổi cập nhật')
+								}
+							})
 						}
 						break;
 					default:
@@ -92,10 +124,9 @@ app.createServer((req, res) => {
 						{
 							var filename = req.headers['filename'];
 							filename += "_Phieu_Ban.xml"
-							if(phieuBanCache == null)
-								phieuBanCache = layThongTin.get_danh_sach_ban(filename);
-							
-							if (phieuBanCache == null) {
+							phieuBan = layThongTin.get_danh_sach_ban(filename);
+
+							if (phieuBan == null) {
 								res.writeHead(404, {
 									'Content-Type': 'text/plain',
 									'Access-Control-Allow-Origin': '*'
@@ -107,7 +138,7 @@ app.createServer((req, res) => {
 								'Content-Type': 'text/xml',
 								'Access-Control-Allow-Origin': '*'
 							});
-							res.end(phieuBanCache)
+							res.end(phieuBan)
 						}
 						break;
 					default:

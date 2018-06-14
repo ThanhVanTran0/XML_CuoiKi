@@ -51,9 +51,11 @@ function HienThiDanhSachBan(table) {
                 var HoTen = Danh_sach_ban.childNodes[0].getAttribute('HoTen')
                 var SDT = Danh_sach_ban.childNodes[0].getAttribute('DienThoai')
                 var DiaChi = Danh_sach_ban.childNodes[0].getAttribute('DiaChi')
+                var today = getDate();
                 $('#HOTEN').val(HoTen)
                 $('#SDT').val(SDT)
                 $('#DIACHI').val(DiaChi)
+                $('#NGAY_BAN').val(today)
 
                 table.clear().draw();
                 var ds_phieu_ban = Danh_sach_ban.getElementsByTagName('PhieuBanHang');

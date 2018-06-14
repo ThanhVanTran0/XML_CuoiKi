@@ -150,21 +150,22 @@ app.createServer((req, res) => {
 								path: '/DanhSachBan',
 								method: 'GET',
 								headers: {
-									'session':session
+									'session': session
 								}
 							}
 
 							var httpRes;
-							httpRes = app.get(options,function(response) {
+							httpRes = app.get(options, function (response) {
 								var body = ''
-								response.on('data',function(chunk) {
-									body+= chunk;
-								}).on('end',function() {
-									if(response.statusCode === 404) {
-										resErrorPage(404,{'Content-Type':'text.plain'})
+								response.on('data', function (chunk) {
+									body += chunk;
+								}).on('end', function () {
+									if (response.statusCode === 404) {
+										resErrorPage(404, {
+											'Content-Type': 'text.plain'
+										})
 										res.end()
-									}
-									else {
+									} else {
 										res.writeHeader(200, {
 											'Content-Type': 'text/xml',
 											'Access-Control-Allow-Origin': '*'
@@ -175,8 +176,8 @@ app.createServer((req, res) => {
 							})
 							httpRes.end();
 
-							httpRes.on('error',function() {
-								resErrorPage(res,'Lỗi kết nối server.');
+							httpRes.on('error', function () {
+								resErrorPage(res, 'Lỗi kết nối server.');
 							})
 						}
 						break;
