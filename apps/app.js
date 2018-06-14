@@ -140,124 +140,169 @@ app.createServer((req, res) => {
 			break;
 		case 'GET':
 			{
-				var path = req.url.split('?')[0];
-
-				var req_url = (path == '/') ? '/index.html' : path;
-
-				if (req_url === '/admin.html' || req_url === '/NhanVien.html') {
-					var cookie = parseCookies(req);
-					var session = cookie['session'];
-
-					//Check session dang nhap
-					if (typeof session === 'undefined' || session ==="#") {
-						res.writeHead(302, {
-							'Content-Type': 'text/html',
-							'Location': '/DangNhap.html'
-						})
-						res.end();
-						return;
-					} else {
-						//Gửi bus để kiểm tra session
-						var options = {
-							hostname: 'localhost',
-							port: 3001,
-							method: "POST",
-							path: '/checksession',
-							headers: {
-								session: cookie['session']
+				switch (req.url) {
+					case '/DanhSachBan':
+						{
+							var session = req.headers['session']
+							var options = {
+								hostname: 'localhost',
+								port: 3001,
+								path: '/DanhSachBan',
+								method: 'GET',
+								headers: {
+									'session':session
+								}
 							}
-						}
 
-						var httpRes;
-						httpRes = app.get(options, (response) => {
-							var body = ''
-							response.on('data', (chunk) => {
-								body += chunk;
+							var httpRes;
+							httpRes = app.get(options,function(response) {
+								var body = ''
+								response.on('data',function(chunk) {
+									body+= chunk;
+								}).on('end',function() {
+									if(response.statusCode === 404) {
+										resErrorPage(404,{'Content-Type':'text.plain'})
+										res.end()
+									}
+									else {
+										res.writeHeader(200, {
+											'Content-Type': 'text/xml',
+											'Access-Control-Allow-Origin': '*'
+										})
+										res.end(body);
+									}
+								})
 							})
+							httpRes.end();
 
-							response.on('end', () => {
-								if (response.statusCode == 404) {
-									console.log('Body' + body)
+							httpRes.on('error',function() {
+								resErrorPage(res,'Lỗi kết nối server.');
+							})
+						}
+						break;
+					default:
+						{
+							var path = req.url.split('?')[0];
+
+							var req_url = (path == '/') ? '/index.html' : path;
+
+							if (req_url === '/admin.html' || req_url === '/NhanVien.html') {
+								var cookie = parseCookies(req);
+								var session = cookie['session'];
+
+								//Check session dang nhap
+								if (typeof session === 'undefined' || session === "#") {
 									res.writeHead(302, {
-										'Content-Type': 'text/plain',
-										'Location':'/',
-										'Set-Cookie':'session=#'
-									});
+										'Content-Type': 'text/html',
+										'Location': '/DangNhap.html'
+									})
 									res.end();
 									return;
 								} else {
-									var data = JSON.parse(body);
-									console.log('body: ' + body);
-									if (data.isadmin === 'false' && req_url === '/admin.html') {
-										resErrorPage(res, 'Đây là tài khoản nhân viên, bạn không được quyền truy cập trang này.');
-									} else {
-										if (data.isadmin === 'true' && req_url === '/NhanVien.html') {
-											resErrorPage(res, 'Tài khoản không có quyền truy cập trang này.')
-										} else {
-											// Trả về file html
-											// Đọc file theo req gửi từ Client lên
-											fs.readFile(__dirname + req_url, (err, data) => {
-												if (err) {
-													// Xử lý phần tìm không thấy resource ở Server
-													console.log('==> Error: ' + err)
-													console.log('==> Error 404: file not found ' + res.url)
-
-													// Set Header của res thành 404 - Not found (thông báo lỗi hiển thị cho Client)
-													resErrorPage(res, "");
-												} else {
-													// Set Header cho res
-													res.setHeader('Content-type', 'text/html');
-													res.end(data);
-												}
-											})
+									//Gửi bus để kiểm tra session
+									var options = {
+										hostname: 'localhost',
+										port: 3001,
+										method: "POST",
+										path: '/checksession',
+										headers: {
+											session: cookie['session']
 										}
 									}
+
+									var httpRes;
+									httpRes = app.get(options, (response) => {
+										var body = ''
+										response.on('data', (chunk) => {
+											body += chunk;
+										})
+
+										response.on('end', () => {
+											if (response.statusCode == 404) {
+												console.log('Body' + body)
+												res.writeHead(302, {
+													'Content-Type': 'text/plain',
+													'Location': '/',
+													'Set-Cookie': 'session=#'
+												});
+												res.end();
+												return;
+											} else {
+												var data = JSON.parse(body);
+												console.log('body: ' + body);
+												if (data.isadmin === 'false' && req_url === '/admin.html') {
+													resErrorPage(res, 'Đây là tài khoản nhân viên, bạn không được quyền truy cập trang này.');
+												} else {
+													if (data.isadmin === 'true' && req_url === '/NhanVien.html') {
+														resErrorPage(res, 'Tài khoản không có quyền truy cập trang này.')
+													} else {
+														// Trả về file html
+														// Đọc file theo req gửi từ Client lên
+														fs.readFile(__dirname + req_url, (err, data) => {
+															if (err) {
+																// Xử lý phần tìm không thấy resource ở Server
+																console.log('==> Error: ' + err)
+																console.log('==> Error 404: file not found ' + res.url)
+
+																// Set Header của res thành 404 - Not found (thông báo lỗi hiển thị cho Client)
+																resErrorPage(res, "");
+															} else {
+																// Set Header cho res
+																res.setHeader('Content-type', 'text/html');
+																res.end(data);
+															}
+														})
+													}
+												}
+											}
+										});
+
+									});
+
+									httpRes.end();
+									httpRes.on('error', (err) => {
+										resErrorPage(res, 'Không thể kết nối đến server');
+										return;
+									})
 								}
-							});
+							} else {
+								var file_extension = req_url.lastIndexOf('.');
+								var duoiFile = req_url.substr(file_extension);
 
-						});
+								var header_type = (file_extension == -1 && req.url != '/') ?
+									'text/plain' : {
+										'/': 'text/html',
+										'.html': 'text/html',
+										'.ico': 'image/x-icon',
+										'.jpg': 'image/jpeg',
+										'.png': 'image/png',
+										'.gif': 'image/gif',
+										'.css': 'text/css',
+										'.js': 'text/javascript',
+										'.ttf': 'font/ttf',
+										'.woff': 'font/woff',
+										'.woff2': 'font/woff2',
+										'.map': 'text/plain'
+									}[duoiFile];
 
-						httpRes.end();
-						httpRes.on('error', (err) => {
-							resErrorPage(res, 'Không thể kết nối đến server');
-							return;
-						})
-					}
-				} else {
-					var file_extension = req_url.lastIndexOf('.');
-					var duoiFile = req_url.substr(file_extension);
+								// Đọc file theo req gửi từ Client lên
+								fs.readFile(__dirname + req_url, (err, data) => {
+									if (err) {
+										// Xử lý phần tìm không thấy resource ở Server
+										console.log('==> Error: ' + err)
+										console.log('==> Error 404: file not found ' + res.url)
 
-					var header_type = (file_extension == -1 && req.url != '/') ?
-						'text/plain' : {
-							'/': 'text/html',
-							'.html': 'text/html',
-							'.ico': 'image/x-icon',
-							'.jpg': 'image/jpeg',
-							'.png': 'image/png',
-							'.gif': 'image/gif',
-							'.css': 'text/css',
-							'.js': 'text/javascript',
-							'.ttf': 'font/ttf',
-							'.woff': 'font/woff',
-							'.woff2': 'font/woff2',
-							'.map': 'text/plain'
-						}[duoiFile];
-
-					// Đọc file theo req gửi từ Client lên
-					fs.readFile(__dirname + req_url, (err, data) => {
-						if (err) {
-							// Xử lý phần tìm không thấy resource ở Server
-							console.log('==> Error: ' + err)
-							console.log('==> Error 404: file not found ' + res.url)
-
-							// Set Header của res thành 404 - Not found (thông báo lỗi hiển thị cho Client)
-							resErrorPage(res, "");
-						} else {
-							// Set Header cho res
-							res.setHeader('Content-type', header_type);
-							res.end(data);
+										// Set Header của res thành 404 - Not found (thông báo lỗi hiển thị cho Client)
+										resErrorPage(res, "");
+									} else {
+										// Set Header cho res
+										res.setHeader('Content-type', header_type);
+										res.end(data);
+									}
+								})
+							}
 						}
-					})
+						break;
 				}
 			}
 			break;

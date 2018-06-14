@@ -231,7 +231,7 @@
 							<div class="row row-pb-md">
 								<div class="col-md-3 col-md-push-9 tongtien">
 									<h4>Tổng Tiền:
-										<span>140000</span> VND</h4>
+										<span id="DS_BAN_TONG_TIEN">140000</span> VND</h4>
 								</div>
 							</div>
 						</div>
@@ -251,16 +251,16 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>CAFE_01</td>
-												<td>ádasdjasjdasdkasjdl</td>
-												<td>2</td>
-												<td>180000 VND</td>
-												<td>18/02/2018</td>
-												<td>360000 VND</td>
-											</tr>
+										
 										</tbody>
 									</table>
+								</div>
+							</div>
+
+							<div class="row row-pb-md">
+								<div class="col-md-3 col-md-push-9 tongtien">
+									<h4>Tổng Tiền:
+										<span id="DS_DA_BAN_TONG_TIEN">140000</span> VND</h4>
 								</div>
 							</div>
 						</div>
@@ -416,21 +416,18 @@
 	<script src="myjs/logout.js"></script>
 	<script src="myjs/xulytaikhoan.js"></script>
 	<script>
-
-		dienThongTin();
-
-		var g_table_ban;
-		var g_table_da_ban;
-		var g_table_sp;
+		let g_table_ban;
+		let g_table_da_ban;
+		let g_table_sp;
 
 		var g_data = getData();
-		// var tmp = getDanhSachBan();
 
 		$(document).ready(function () {
-			$('#DS_BAN').DataTable();
-			$('#DS_DA_BAN').DataTable();
+			g_table_ban = $('#DS_BAN').DataTable();
+			g_table_da_ban = $('#DS_DA_BAN').DataTable();
 			g_table_sp = $('#DS_SP').DataTable();
 			HienThiDanhSachSanPham(g_data, g_table_sp);
+			HienThiDanhSachBan(g_table_da_ban);
 		});
 	</script>
 

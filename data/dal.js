@@ -48,6 +48,7 @@ app.createServer((req, res) => {
 										'session': `${session}`,
 										'isadmin': `${isadmin}`,
 										'name': `${dsTaiKhoan[vitri].getAttribute('name')}`,
+										'id':dsTaiKhoan[vitri].getAttribute('id')
 									}
 									res.writeHead(200, {
 										'Content-Type': 'text/plain'

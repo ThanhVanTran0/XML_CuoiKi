@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DanhSachPhieuBanHang>
-	<PhieuBanHang ID="thanh" Ngay="04-01-2018" HoTen="Trần Văn Thanh" DienThoai="0123456789" DiaChi="TP. Hồ Chí Minh" TongTien="140000">
+<DanhSachPhieuBanHang ID="thanh"  HoTen="Trần Văn Thanh" DienThoai="0123456789" DiaChi="TP. Hồ Chí Minh">
+	<PhieuBanHang Ngay="04-01-2018" TongTien="140000">
                 <SanPham MaSP="CAFE_01" Ten="Hazelnut Macchiato" SoLuong="1" GiaBan="50000"/>
                 <SanPham MaSP="FRAPBLENDED_01" Ten="Asian Dolce Frappuccino® Blended Coffee" SoLuong="1" GiaBan="90000"/>
 	</PhieuBanHang>

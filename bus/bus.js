@@ -7,8 +7,6 @@ var fs = require('fs');
 
 var dsSession = []
 
-var idCache = ''
-
 function ktSession(session) {
 	var length = dsSession.length
 	for (var i = 0; i < length; i++) {
@@ -40,11 +38,6 @@ function deleteSession(session) {
 }
 
 app.createServer((req, res) => {
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-	res.setHeader('Access-Control-Allow-Headers', 'Content-type');
-	res.setHeader('Access-Control-Allow-Headers', 'X-Signature');
-	res.setHeader('Access-Control-Allow-Headers', 'X-Key');
 	switch (req.method) {
 		case 'POST':
 			{
@@ -86,7 +79,6 @@ app.createServer((req, res) => {
 											'isadmin': data.isadmin
 										}
 										dsSession.push(data);
-										idCache = req.headers['username']
 										res.end(body);
 									}
 								})
@@ -127,7 +119,6 @@ app.createServer((req, res) => {
 							res.writeHead(200, {
 								'Content-Type': 'text/plain'
 							});
-							idCache = ''
 							res.end("OK");
 						}
 						break;
@@ -138,6 +129,7 @@ app.createServer((req, res) => {
 						break;
 					case '/CapNhat':
 						{
+							console.log('Vo cap nhat')
 							// Kiem tra session truowc
 							var body = ''
 
@@ -146,7 +138,8 @@ app.createServer((req, res) => {
 							})
 
 							req.on('end',function() {
-								// todo
+								// var data = JSON.parse(body);
+								console.log(body)
 							})
 						}
 						break;
@@ -195,69 +188,52 @@ app.createServer((req, res) => {
 						break;
 					case '/DanhSachBan':
 						{
-							console.log(req.headers['session'])
-							var body = ''
+							var session = req.headers['session']
+							console.log('test get session: ' + session);
+							var index = ktSession(session);
+							if (index != -1) {
+								var options = {
+									hostname: 'localhost',
+									port: 3000,
+									path: '/DanhSachBan',
+									headers: {
+										filename: dsSession[index].id
+									},
+									method: 'GET'
+								}
 
-							req.on('data', function (chunk) {
-								body += chunk;
-							})
+								var httpRes = app.get(options, function (response) {
+									var body = ''
+									response.on('data', (chunk) => {
+										body += chunk;
+									}).on('end', () => {
+										if (response.statusCode === 404) {
+											res.writeHead(404,{'Content-Type':'text/plain'})
+											res.end('Không thể lấy dữ liệu');
+										} else {
+											res.writeHeader(200, {
+												'Content-Type': 'text/xml',
+												'Access-Control-Allow-Origin': '*'
+											})
+											res.end(body);
+										}
+									});
 
-							req.on('end', function () {
-								console.log('Body: ' + body)
-							})
+								})
+								httpRes.end();
 
-							res.writeHeader(200, {
-								'Content-Type': 'text/xml',
-								'Access-Control-Allow-Origin': '*'
-							})
-							res.end('asadasd');
-
-							// var session = req.headers['session']
-							// console.log('test get session: ' + session);
-							// var index = ktSession(session);
-							// if (index != -1) {
-							// 	var options = {
-							// 		hostname: 'localhost',
-							// 		port: 3000,
-							// 		path: '/DanhSachBan',
-							// 		headers: {
-							// 			filename: idCache
-							// 		},
-							// 		method: 'GET'
-							// 	}
-
-							// 	var httpRes = app.get(options, function (response) {
-							// 		var body = ''
-							// 		response.on('data', (chunk) => {
-							// 			body += chunk;
-							// 		}).on('end', () => {
-							// 			if (response.statusCode === 404) {
-							// 				res.writeHead(404,{'Content-Type':'text/plain'})
-							// 				res.end('Không thể lấy dữ liệu');
-							// 			} else {
-							// 				res.writeHeader(200, {
-							// 					'Content-Type': 'text/xml',
-							// 					'Access-Control-Allow-Origin': '*'
-							// 				})
-							// 				res.end(body);
-							// 			}
-							// 		});
-
-							// 	})
-							// 	httpRes.end();
-
-							// 	httpRes.on('error', function () {
-							// 		res.writeHead(404, {
-							// 			'Content-Type': 'text/plain;charset=utf-8'
-							// 		});
-							// 		res.end('Máy chủ không phản hồi')
-							// 	})
-							// } else {
-							// 	res.writeHead(404, {
-							// 		'Content-Type': 'text/plain;charset=utf-8'
-							// 	})
-							// 	res.end('Vui lòng đăng nhập lại');
-							// }
+								httpRes.on('error', function () {
+									res.writeHead(404, {
+										'Content-Type': 'text/plain;charset=utf-8'
+									});
+									res.end('Máy chủ không phản hồi')
+								})
+							} else {
+								res.writeHead(404, {
+									'Content-Type': 'text/plain;charset=utf-8'
+								})
+								res.end('Vui lòng đăng nhập lại');
+							}
 						}
 						break;
 					default:

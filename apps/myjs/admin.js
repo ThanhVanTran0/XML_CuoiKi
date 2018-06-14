@@ -13,6 +13,7 @@ $(document).ready(function () {
 	})
 
 	$('button#CAP_NHAT').click(function () {
+		console.log('dang click')
 		var parent = $(this).parent().parent();
 		var GIA_BAN = parent.find('input.GIA_BAN').val();
 		if (GIA_BAN == "" || isNaN(parseInt(GIA_BAN)) || parseInt(GIA_BAN) <= 0) {
@@ -26,21 +27,24 @@ $(document).ready(function () {
 			}
 			console.log('id: ' + id + ' gb: ' + GIA_BAN + ' tt: ' + TAM_NGUNG);
 
-			// $.ajax({
-			// 	url: 'http://localhost:3001/TinhTien',
-			// 	method: 'POST',
-			// 	data: {
+			$.ajax({
+				url: 'http://localhost:3001/CapNhat',
+				method: 'POST',
+				// data: {
+				// 	'MA_SP':MA_SP,
+				// 	'GIA_BAN':GIA_BAN,
+				// 	'TAM_NGUNG':TAM_NGUNG
+				// },
+				error: function (request, status, error) {
 
-			// 	},
-			// 	error: function (request, status, error) {
+				},
+				success: function(data) {
 
-			// 	},
-			// 	success: function(data) {
-
-			// 	}
-			// })
+				}
+			})
 
 			parent.find('button#CAP_NHAT').attr('disabled', true)
+			return false;
 		}
 	})
 });

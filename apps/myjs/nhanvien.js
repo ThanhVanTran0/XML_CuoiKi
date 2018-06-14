@@ -31,29 +31,6 @@ function getDate() {
     return today;
 }
 
-function dienThongTin() {
-
-    $('#NGAY_BAN').val(`${getDate()}`);
-
-    var session = getCookie('session');
-    if (session != "") {
-        var HoTen = getCookie('name')
-        var sdt = getCookie('sdt')
-        var DiaChi = getCookie('DiaChi')
-
-        if (HoTen != "" && sdt != "" && DiaChi != "") {
-            $('#HOTEN').val(`${HoTen}`)
-            $('#SDT').val(`${sdt}`)
-            $('#DIACHI').val(`${DiaChi}`)
-        } else {
-            $('#HOTEN').val("")
-            $('#SDT').val("")
-            $('#DIACHI').val("")
-        }
-
-    }
-}
-
 function getData() {
     var xhttp = new XMLHttpRequest();
     var query = 'http://localhost:3001/DanhSachSanPham';
@@ -63,24 +40,55 @@ function getData() {
     return Danh_sach_san_pham;
 }
 
-function getDanhSachBan() {
-    // $.ajax({
-    //     type: "GET",
-    //     cache: false,
-    //     url: 'http://localhost:3001/DanhSachBan',
-    //     crossDomain: true,
-    //     dataType: "json",
-    //     // beforeSend: function(request) {
-    //     //     request.setRequestHeader("session", 'asdasdas');
-    //     // },
-    //     error: function () {
-    //         console.log("Error!");
-    //     },
-    //     success: function (jsonarray) {
-    //         console.log("OK - Hãy xử lý data như bạn mong muốn");
-    //     }
-    // });
-    return 0;
+function HienThiDanhSachBan(table) {
+    var session = getCookie('session')
+    var xhttp = new XMLHttpRequest();
+    var query = '/DanhSachBan';
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var Danh_sach_ban = xhttp.responseXML;
+            if (Danh_sach_ban != null) {
+                var HoTen = Danh_sach_ban.childNodes[0].getAttribute('HoTen')
+                var SDT = Danh_sach_ban.childNodes[0].getAttribute('DienThoai')
+                var DiaChi = Danh_sach_ban.childNodes[0].getAttribute('DiaChi')
+                $('#HOTEN').val(HoTen)
+                $('#SDT').val(SDT)
+                $('#DIACHI').val(DiaChi)
+
+                table.clear().draw();
+                var ds_phieu_ban = Danh_sach_ban.getElementsByTagName('PhieuBanHang');
+                var length = ds_phieu_ban.length
+                var TongTien = 0;
+                for (var i = 0; i < length; i++) {
+                    var NgayBan = ds_phieu_ban[i].getAttribute('Ngay');
+                    TongTien += parseInt(ds_phieu_ban[i].getAttribute('TongTien'));
+                    var ds_sp = ds_phieu_ban[i].getElementsByTagName('SanPham');
+                    var length2 = ds_sp.length
+                    for (var j = 0; j < length2; j++) {
+                        var MaSP = ds_sp[j].getAttribute('MaSP')
+                        var Ten = ds_sp[j].getAttribute('Ten')
+                        var SoLuong = parseInt(ds_sp[j].getAttribute('SoLuong'));
+                        var DonGia = parseInt(ds_sp[j].getAttribute('GiaBan'));
+                        var TongTienPhaiTra = SoLuong * DonGia;
+                        var newRow = `<tr>
+                                            <td>${MaSP}</td>
+                                            <td>${Ten}</td>
+                                            <td>${SoLuong}</td>
+                                            <td>${DonGia.toLocaleString()} VND</td>
+                                            <td>${NgayBan}</td>
+                                            <td>${TongTienPhaiTra.toLocaleString()}</td>
+                                        </tr>`
+                        table.row.add($(newRow))
+                    }
+                }
+                table.draw();
+                $('#DS_DA_BAN_TONG_TIEN').text(TongTien.toLocaleString());
+            }
+        }
+    };
+    xhttp.open('GET', query, true);
+    xhttp.setRequestHeader('session', session);
+    xhttp.send();
 }
 
 function HienThiDanhSachSanPham(Danh_sach_san_pham, table) {
@@ -103,7 +111,7 @@ function HienThiDanhSachSanPham(Danh_sach_san_pham, table) {
                         </td>
                         <td>${MASP}</td>
                         <td>${Ten}</td>
-                        <td>${GiaBan}</td>
+                        <td>${parseInt(GiaBan).toLocaleString()}</td>
                     </tr>`;
             table.row.add($(newRow));
         }
