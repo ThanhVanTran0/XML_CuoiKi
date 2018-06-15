@@ -49,7 +49,6 @@ function btnClick(element) {
 		if (TINH_TRANG.checked == true) {
 			TAM_NGUNG = true
 		}
-		console.log('id: ' + id + ' gb: ' + GIA_BAN + ' tt: ' + TAM_NGUNG);
 		var session = getCookie('session')
 		var data = {
 			'MA_SP': id,

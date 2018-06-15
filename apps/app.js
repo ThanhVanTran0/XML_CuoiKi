@@ -105,7 +105,6 @@ app.createServer((req, res) => {
 											});
 											res.end('Lỗi');
 										} else {
-											console.log('Vo end tra ve kq: ' + body)
 											res.writeHead(200, {
 												'Content-Type': 'text/plain'
 											})
@@ -220,7 +219,6 @@ app.createServer((req, res) => {
 
 										response.on('end', () => {
 											if (response.statusCode == 404) {
-												console.log('Body' + body)
 												res.writeHead(302, {
 													'Content-Type': 'text/plain',
 													'Location': '/',
@@ -230,7 +228,6 @@ app.createServer((req, res) => {
 												return;
 											} else {
 												var data = JSON.parse(body);
-												console.log('body: ' + body);
 												if (data.isadmin === 'false' && req_url === '/admin.html') {
 													resErrorPage(res, 'Đây là tài khoản nhân viên, bạn không được quyền truy cập trang này.');
 												} else {

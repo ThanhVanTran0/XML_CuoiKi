@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<DanhSachPhieuBanHang ID="thanh"  HoTen="Trần Văn Thanh" DienThoai="0123456789" DiaChi="TP. Hồ Chí Minh">
-	<PhieuBanHang Ngay="04-01-2018" TongTien="140000">
+<?xml version="1.0" encoding="UTF-8"?><DanhSachPhieuBanHang ID="thanh" HoTen="Trần Văn Thanh" DienThoai="0123456789" DiaChi="TP. Hồ Chí Minh">
+	<PhieuBanHang Ngay="06/14/2018" TongTien="681000">
                 <SanPham MaSP="CAFE_01" Ten="Hazelnut Macchiato" SoLuong="1" GiaBan="50000"/>
                 <SanPham MaSP="FRAPBLENDED_01" Ten="Asian Dolce Frappuccino® Blended Coffee" SoLuong="1" GiaBan="90000"/>
-	</PhieuBanHang>
-</DanhSachPhieuBanHang>
+	<SanPham MaSP="CAFE_01" Ten="Caramel Macchiato" SoLuong="3" GiaBan="72000"/><SanPham MaSP="CAFE_02" Ten="Caffe latte" SoLuong="5" GiaBan="65000"/></PhieuBanHang>
+<PhieuBanHang Ngay="06/15/2018" TongTien="1398000"><SanPham MaSP="CAFE_01" Ten="Caramel Macchiato" SoLuong="6" GiaBan="72000"/><SanPham MaSP="CAFE_02" Ten="Caffe latte" SoLuong="12" GiaBan="65000"/><SanPham MaSP="CAFE_03" Ten="Cappuccino" SoLuong="3" GiaBan="62000"/></PhieuBanHang></DanhSachPhieuBanHang>

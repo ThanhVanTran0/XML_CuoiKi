@@ -27,7 +27,7 @@ function getDate() {
     if (mm < 10) {
         mm = '0' + mm;
     }
-    var today = dd + '/' + mm + '/' + yyyy;
+    var today = mm + '/' + dd + '/' + yyyy;
     return today;
 }
 
@@ -38,6 +38,26 @@ function getData() {
     xhttp.send();
     var Danh_sach_san_pham = xhttp.responseXML.getElementsByTagName('SanPham');
     return Danh_sach_san_pham;
+}
+
+function HienThiDanhSachBanTrongNgay(ds_sp, table) {
+    var length = ds_sp.length
+    for (var j = 0; j < length; j++) {
+        var MaSP = ds_sp[j].getAttribute('MaSP')
+        var Ten = ds_sp[j].getAttribute('Ten')
+        var SoLuong = parseInt(ds_sp[j].getAttribute('SoLuong'));
+        var DonGia = parseInt(ds_sp[j].getAttribute('GiaBan'));
+        var TongTienPhaiTra = SoLuong * DonGia;
+        var newRow = `<tr>
+                            <td>${MaSP}</td>
+                            <td>${Ten}</td>
+                            <td>${SoLuong}</td>
+                            <td>${DonGia.toLocaleString()} VND</td>
+                            <td>${TongTienPhaiTra.toLocaleString()}</td>
+                        </tr>`
+        table.row.add($(newRow))
+    }
+    table.draw();
 }
 
 function HienThiDanhSachBan(table) {
@@ -58,13 +78,20 @@ function HienThiDanhSachBan(table) {
                 $('#NGAY_BAN').val(today)
 
                 table.clear().draw();
+                console.log(Danh_sach_ban);
                 var ds_phieu_ban = Danh_sach_ban.getElementsByTagName('PhieuBanHang');
                 var length = ds_phieu_ban.length
                 var TongTien = 0;
+                let dsSanPhamTrongNgay = '';
                 for (var i = 0; i < length; i++) {
                     var NgayBan = ds_phieu_ban[i].getAttribute('Ngay');
-                    TongTien += parseInt(ds_phieu_ban[i].getAttribute('TongTien'));
+                    var TONG_TIEN_CUA_PHIEU = parseInt(ds_phieu_ban[i].getAttribute('TongTien'));
+                    TongTien += TONG_TIEN_CUA_PHIEU;
+                    $('#DS_BAN_TONG_TIEN').text(TONG_TIEN_CUA_PHIEU.toLocaleString());
                     var ds_sp = ds_phieu_ban[i].getElementsByTagName('SanPham');
+                    if (NgayBan === today) {
+                        dsSanPhamTrongNgay = ds_sp;
+                    }
                     var length2 = ds_sp.length
                     for (var j = 0; j < length2; j++) {
                         var MaSP = ds_sp[j].getAttribute('MaSP')
@@ -85,6 +112,7 @@ function HienThiDanhSachBan(table) {
                 }
                 table.draw();
                 $('#DS_DA_BAN_TONG_TIEN').text(TongTien.toLocaleString());
+                HienThiDanhSachBanTrongNgay(dsSanPhamTrongNgay, g_table_ban);
             }
         }
     };
@@ -121,7 +149,7 @@ function HienThiDanhSachSanPham(Danh_sach_san_pham, table) {
     table.draw();
 }
 
-function LayGiaBan() {
+function LayGiaBanVaTenSP() {
     var length = g_data.length
     if (typeof length === 'undefined' || length === 0) {
         alert('Danh sách rỗng')
@@ -135,7 +163,15 @@ function LayGiaBan() {
                 ma_sp = ma_sp.toUpperCase();
                 MA_SP = MA_SP.toUpperCase();
                 if (MA_SP === ma_sp) {
-                    $('#GIA_BAN').val(g_data[i].getAttribute('GiaBan'))
+                    if(g_data[i].getAttribute('TamNgung') === 'true')
+                    {
+                        alert('Sản Phẩm Đang Tạm Ngưng.')
+                        $('#MA_SP').val('')
+                    }
+                    else {
+                        $('#GIA_BAN').val(g_data[i].getAttribute('GiaBan'))
+                        $('#TEN_SP').val(g_data[i].getAttribute('Ten'))
+                    }
                     return;
                 }
             }
@@ -145,7 +181,7 @@ function LayGiaBan() {
 }
 
 function TinhTien() {
-    var MA_SP = $('#MA_SP').val();
+    var MA_SP = $('#MA_SP').val().toUpperCase();
     if (MA_SP === "") {
         alert('Không được để trống Mã SP')
     } else {
@@ -153,9 +189,32 @@ function TinhTien() {
         if (SO_LUONG == "" || parseInt(SO_LUONG) <= 0 || isNaN(parseInt(SO_LUONG))) {
             alert('Số lượng không được bỏ trống, là số nguyên lớn hơn 0');
         } else {
-            // TOdo
+            var session = getCookie('session')
+            var NGAY_BAN = $('#NGAY_BAN').val();
+            var TEN_SP = $('#TEN_SP').val();
+            var GIA_BAN = $('#GIA_BAN').val();
+            var data = {
+                'session': session,
+                'MA_SP': MA_SP,
+                'SO_LUONG': SO_LUONG,
+                'GIA_BAN': GIA_BAN,
+                'NGAY_BAN': NGAY_BAN,
+                'TEN_SP': TEN_SP
+            }
+
+            $.ajax({
+                url: 'http://localhost:3001/TinhTien',
+                method: 'POST',
+                dataType: 'text',
+                data: JSON.stringify(data),
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                },
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                }
+            })
         }
     }
-    var NGAYBAN = $('#NGAYBAN').val();
-
 }

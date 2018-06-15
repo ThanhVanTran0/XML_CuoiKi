@@ -73,13 +73,13 @@
 						</div>
 						<div class="col-xs-10 text-right menu-1">
 							<ul>
-								<li class="active">
+								<li>
 									<a href="index.html">Trang chủ</a>
 								</li>
 								<li>
 									<a href="shop.html">Danh sách sản phẩm</a>
 								</li>
-								<li>
+								<li  class="active">
 									<a href="NhanVien.html">Nhân viên</a>
 								</li>
 								<li>
@@ -179,7 +179,8 @@
 							<div class="row row-pb-md">
 								<div class="col-md-3">
 									<h4>Sản Phẩm</h4>
-									<input id="MA_SP" onblur="LayGiaBan()" type="text" name="" value="" placeholder="Mã SP">
+									<input id="MA_SP" onblur="LayGiaBanVaTenSP()" type="text" name="" value="" placeholder="Mã SP">
+									<input id="TEN_SP" type="text" value="" disabled style="display: none">
 								</div>
 
 								<div class="col-md-3">
@@ -216,13 +217,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>CAFE_01</td>
-												<td>CAFE_01</td>
-												<td>2</td>
-												<td>180000 VND</td>
-												<td>360000 VND</td>
-											</tr>
+											
 										</tbody>
 									</table>
 								</div>
@@ -231,7 +226,7 @@
 							<div class="row row-pb-md">
 								<div class="col-md-3 col-md-push-9 tongtien">
 									<h4>Tổng Tiền:
-										<span id="DS_BAN_TONG_TIEN">140000</span> VND</h4>
+										<span id="DS_BAN_TONG_TIEN"></span> VND</h4>
 								</div>
 							</div>
 						</div>

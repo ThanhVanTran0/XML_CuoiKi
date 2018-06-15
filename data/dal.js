@@ -24,8 +24,6 @@ function createSession() {
 	return '_' + Math.random().toString(36).substr(2, 9);
 }
 
-var dsSp = ""
-
 app.createServer((req, res) => {
 	var method = req.method;
 	switch (method) {
@@ -36,8 +34,6 @@ app.createServer((req, res) => {
 						{
 							var user = req.headers['username'];
 							var pass = req.headers['password'];
-							console.log('user: ' + user);
-							console.log('pass: ' + pass);
 							var dsTaiKhoan = layThongTin.get_tai_khoan();
 							if (dsTaiKhoan != null) {
 								var vitri = ktTaiKhoan(dsTaiKhoan, user, pass);
@@ -48,7 +44,8 @@ app.createServer((req, res) => {
 										'session': `${session}`,
 										'isadmin': `${isadmin}`,
 										'name': `${dsTaiKhoan[vitri].getAttribute('name')}`,
-										'id': dsTaiKhoan[vitri].getAttribute('id')
+										'id': dsTaiKhoan[vitri].getAttribute('id'),
+										'dsBanHang': ""
 									}
 									res.writeHead(200, {
 										'Content-Type': 'text/plain'
@@ -77,24 +74,47 @@ app.createServer((req, res) => {
 
 							req.on('end', function () {
 								var data = JSON.parse(body);
-								console.log(data)
 								var check = luuDuLieu.thay_Doi_San_Pham(data);
-								
-								if(check == true) {
-									dsSp = ""
-									console.log(dsSp)
+
+								if (check == true) {
 									res.writeHead(200, {
 										'Content-Type': 'text/plain',
 										'Access-Control-Allow-Origin': '*'
 									});
 									res.end('Thay đổi thành công.')
-								}
-								else {
+								} else {
 									res.writeHead(404, {
 										'Content-Type': 'text/plain',
 										'Access-Control-Allow-Origin': '*'
 									});
 									res.end('Không thể thay đổi cập nhật')
+								}
+							})
+						}
+						break;
+					case '/TinhTien':
+						{
+							var body = ''
+
+							req.on('data', function (chunk) {
+								body += chunk;
+							})
+
+							req.on('end', function () {
+								var data = JSON.parse(body);
+								var check = luuDuLieu.Luu_Thong_Tin_Ban_SP(data);
+								if (check == true) {
+									res.writeHead(200, {
+										'Content-Type': 'text/plain',
+										'Access-Control-Allow-Origin': '*'
+									});
+									res.end('Đã lưu dữ liệu.')
+								} else {
+									res.writeHead(404, {
+										'Content-Type': 'text/plain',
+										'Access-Control-Allow-Origin': '*'
+									});
+									res.end('Không thể lưu dữ liệu')
 								}
 							})
 						}
@@ -110,9 +130,7 @@ app.createServer((req, res) => {
 				switch (req.url) {
 					case '/DanhSachSanPham':
 						{
-							if (dsSp == "") {
-								dsSp = layThongTin.get_ds_San_Pham();
-							}
+							var dsSp = layThongTin.get_ds_San_Pham();
 							res.writeHeader(200, {
 								'Content-Type': 'text/xml',
 								'Access-Control-Allow-Origin': '*'
@@ -124,7 +142,7 @@ app.createServer((req, res) => {
 						{
 							var filename = req.headers['filename'];
 							filename += "_Phieu_Ban.xml"
-							phieuBan = layThongTin.get_danh_sach_ban(filename);
+							var phieuBan = layThongTin.get_danh_sach_ban(filename);
 
 							if (phieuBan == null) {
 								res.writeHead(404, {
