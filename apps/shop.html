@@ -193,12 +193,7 @@
 								<h2>Sản Phẩm</h2>
 								<div class="fancy-collapse-panel">
 									<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-										<select name="SanPham" class="form-control">
-											<option value="">All</option>
-											<option value="">Cafe</option>
-											<option value="">Frapblended</option>
-											<option value="">FrapCream</option>
-											<option value="">Tea</option>
+										<select name="SanPham" id="LoaiSP" class="form-control" onchange="LoaiSPThayDoi()">
 										</select>
 
 									</div>
@@ -327,6 +322,7 @@
 	<script src="myjs/shop.js"></script>
 	<script>
 		var San_Pham = GetData();
+		TaoDanhSachLoaiSP(San_Pham);
 		HienThiSanPham(San_Pham);
 	</script>
 
