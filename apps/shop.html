@@ -134,71 +134,18 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-10 col-md-push-2">
-						<div class="row row-pb-lg">
-
-							<div class="col-md-4 text-center">
-								<div class="product-entry">
-									<div class="product-img" style="background-image: url(images/item-5.jpg);">
-										<p class="tag">
-											<span class="new">CAFE_01</span>
-										</p>
-										<div class="cart">
-											<p>
-												Hương vị đậm đà đánh thức vị giác
-											</p>
-										</div>
-									</div>
-									<div class="desc">
-										<h3>
-											<a href="#">Cafe Capochino</a>
-										</h3>
-										<p class="price">
-											<span>65000 VND</span>
-										</p>
-									</div>
-								</div>
-							</div>
-							<!-- End 1 san phẩm -->
-						</div>
-
-						<div class="row">
-							<div class="col-md-12">
-								<ul class="pagination">
-									<li class="disabled">
-										<a href="#">&laquo;</a>
-									</li>
-									<li class="active">
-										<a href="#">1</a>
-									</li>
-									<li>
-										<a href="#">2</a>
-									</li>
-									<li>
-										<a href="#">3</a>
-									</li>
-									<li>
-										<a href="#">4</a>
-									</li>
-									<li>
-										<a href="#">&raquo;</a>
-									</li>
-								</ul>
-							</div>
+						<div id="DS_SP" class="row row-pb-lg">
+							//San Pham
 						</div>
 					</div>
-					<!-- End phần phân trang -->
+
 					<div class="col-md-2 col-md-pull-10">
 						<div class="sidebar">
 							<div class="side">
 								<h2>Sản Phẩm</h2>
 								<div class="fancy-collapse-panel">
 									<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-										<select name="SanPham" class="form-control">
-											<option value="">All</option>
-											<option value="">Cafe</option>
-											<option value="">Frapblended</option>
-											<option value="">FrapCream</option>
-											<option value="">Tea</option>
+										<select name="SanPham" id="LoaiSP" class="form-control" onchange="LoaiSPThayDoi()">
 										</select>
 
 									</div>
@@ -324,6 +271,12 @@
 	<script src="js/main.js"></script>
 	<script src="myjs/logout.js"></script>
 	<script src="myjs/xulytaikhoan.js"></script>
+	<script src="myjs/shop.js"></script>
+	<script>
+		var San_Pham = GetData();
+		TaoDanhSachLoaiSP(San_Pham);
+		HienThiSanPham(San_Pham);
+	</script>
 
 </body>
 
