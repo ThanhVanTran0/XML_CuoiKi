@@ -13,35 +13,38 @@ function HienThiSanPham(san_pham) {
     var Table = document.getElementById('DS_SP');
     Table.innerHTML = '';
     for (var i = 0; i < so_luong; i++) {
-        var MASP = san_pham[i].getAttribute('MaSP');
-        var Ten = san_pham[i].getAttribute('Ten');
-        var GiaBan = +san_pham[i].getAttribute('GiaBan');
-        var MoTa = san_pham[i].getAttribute('MoTa');
-        var img_src = 'images/' + MASP + '.jpg';
+        if (san_pham[i].getAttribute('TamNgung') === 'false') {
+            var MASP = san_pham[i].getAttribute('MaSP');
+            var Ten = san_pham[i].getAttribute('Ten');
+            var GiaBan = +san_pham[i].getAttribute('GiaBan');
+            var MoTa = san_pham[i].getAttribute('MoTa');
+            var img_src = 'images/' + MASP + '.jpg';
 
-        var item = `<div class="col-md-4 text-center">
-                        <div class="product-entry">
-                            <div class="product-img" style="background-image: url(${img_src});">
-                                <p class="tag">
-                                    <span class="new">${MASP}</span>
-                                </p>
-                                <div class="cart">
-                                    <p>
-                                        ${MoTa}
+            var item = `<div class="col-md-4 text-center">
+                            <div class="product-entry">
+                                <div class="product-img" style="background-image: url(${img_src});">
+                                    <p class="tag">
+                                        <span class="new">${MASP}</span>
+                                    </p>
+                                    <div class="cart">
+                                        <p>
+                                            ${MoTa}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="desc">
+                                    <div class="cut-text">
+                                        ${Ten}
+                                    </div>
+                                    <p class="price" style ="font-size:18px">
+                                        <span>${GiaBan.toLocaleString()} VND</span>
                                     </p>
                                 </div>
                             </div>
-                            <div class="desc">
-                                <div class="cut-text">
-                                    ${Ten}
-                                </div>
-                                <p class="price" style ="font-size:18px">
-                                    <span>${GiaBan.toLocaleString()} VND</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>`;
-        Table.appendChild($(item)[0])
+                        </div>`;
+            Table.appendChild($(item)[0])
+        }
+
     }
 }
 

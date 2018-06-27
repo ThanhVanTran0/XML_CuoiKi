@@ -155,6 +155,21 @@ function LayGiaBanVaTenSP() {
     }
 }
 
+function XoaSPBan(element) {
+    let parent = $(element).parent().parent('tr');
+    var MaSP = parent.find('td')[0].innerText;
+    for(var i=0;i<DS_SPBAN.length ;i++) {
+        if(DS_SPBAN[i].MA_SP === MaSP) {
+            g_TongTien = g_TongTien - (+DS_SPBAN[i].SO_LUONG * +DS_SPBAN[i].GIA_BAN)
+            $('#DS_BAN_TONG_TIEN').val(g_TongTien);
+            DS_SPBAN.splice(i,1);
+            break;
+        } 
+    }
+    console.log(DS_SPBAN);
+    g_table_ban.row(parent).remove().draw();
+}
+
 function ThemVaoDanhSachBan() {
     var MA_SP = $('#MA_SP').val().toUpperCase();
     if (MA_SP === "") {
@@ -191,6 +206,9 @@ function ThemVaoDanhSachBan() {
                                 <td>${SO_LUONG}</td>
                                 <td>${GIA_BAN}</td>
                                 <td>${TONG_TIEN.toLocaleString()}</td>
+                                <td>
+                                    <button type="button" onclick="XoaSPBan(this)" class="btn btn-primary">Xóa</button>
+                                </td>
                             </tr>`;
                 g_table_ban.row.add($(newRow));
             }
@@ -204,6 +222,9 @@ function ThemVaoDanhSachBan() {
                                     <td>${DS_SPBAN[j].SO_LUONG}</td>
                                     <td>${DS_SPBAN[j].GIA_BAN}</td>
                                     <td>${tt.toLocaleString()}</td>
+                                    <td>
+                                        <button type="button" onclick="XoaSPBan(this)" class="btn btn-primary">Xóa</button>
+                                    </td>
                                 </tr>`;
                     g_table_ban.row.add($(newRow));
                 }
