@@ -33,6 +33,22 @@ var thay_Doi_San_Pham = (data) => {
     }
 }
 
+function ThemDSSP(PhieuBan,data) {
+    var DS_SPBAN = JSON.parse(data.DS_SP);
+    var tongtienmoi = parseInt(PhieuBan.getAttribute('TongTien'));
+    for(var i=0;i<DS_SPBAN.length ;i++) {
+        var spRow = new DOMParser().parseFromString('<SanPham/>').documentElement
+        spRow.setAttribute('MaSP', DS_SPBAN[i].MA_SP);
+        spRow.setAttribute('TenKH', data.TEN_KH);
+        spRow.setAttribute('Ten', DS_SPBAN[i].TEN_SP);
+        spRow.setAttribute('SoLuong', DS_SPBAN[i].SO_LUONG);
+        spRow.setAttribute('GiaBan', DS_SPBAN[i].GIA_BAN);
+        tongtienmoi += +DS_SPBAN[i].SO_LUONG * +DS_SPBAN[i].GIA_BAN;
+        PhieuBan.appendChild(spRow);
+    }
+    PhieuBan.setAttribute('TongTien',tongtienmoi);
+}
+
 var Luu_Thong_Tin_Ban_SP = (data) => {
     var filePath = pathPBH + "/" + data.id + "_Phieu_Ban.xml"
     var chuoiXml = ""
@@ -44,63 +60,27 @@ var Luu_Thong_Tin_Ban_SP = (data) => {
     var SP = new DOMParser().parseFromString(chuoiXml, 'text/xml').documentElement;
     var dsPhieuBan = SP.getElementsByTagName('PhieuBanHang');
     var length = dsPhieuBan.length
-    var TONG_TIEN_1_SP = 0;
-
+    let DS_SPBAN =  JSON.parse(data.DS_SP);
     if (length > 0) {
         // Lấy danh sách bán cuối cùng kiểm tra, nếu cùng ngày thì cập nhật
         var NGAY_BAN = dsPhieuBan[length - 1].getAttribute('Ngay');
-        TONG_TIEN_1_SP = parseInt(data.SO_LUONG) * parseInt(data.GIA_BAN)
         if (data.NGAY_BAN === NGAY_BAN) {
-            var dsSP = dsPhieuBan[length - 1].getElementsByTagName('SanPham');
-            var length2 = dsSP.length
-            var kt = false
-            var tongtienmoi = parseInt(dsPhieuBan[length - 1].getAttribute('TongTien'));
-            for (var j = 0; j < length2; j++) {
-                var MaSP = dsSP[j].getAttribute('MaSP')
-                var GIA_CU = dsSP[j].getAttribute('GiaBan');
-                if (MaSP === data.MA_SP && GIA_CU === data.GIA_BAN) {
-                    var soluongmoi = parseInt(dsSP[j].getAttribute('SoLuong')) + parseInt(data.SO_LUONG);
-                    tongtienmoi += TONG_TIEN_1_SP;
-                    dsSP[j].setAttribute('SoLuong', soluongmoi);
-                    kt = true
-                    break;
-                }
-            }
-            if (kt == false) {
-                var spRow = new DOMParser().parseFromString('<SanPham/>').documentElement
-                spRow.setAttribute('MaSP', data.MA_SP);
-                spRow.setAttribute('Ten', data.TEN_SP);
-                spRow.setAttribute('SoLuong', data.SO_LUONG);
-                spRow.setAttribute('GiaBan', data.GIA_BAN);
-                tongtienmoi += TONG_TIEN_1_SP;
-                dsPhieuBan[length - 1].appendChild(spRow)
-            }
-            dsPhieuBan[length - 1].setAttribute('TongTien', tongtienmoi);
+            ThemDSSP(dsPhieuBan[length-1],data);
         }
         else {
             // Trường hợp ngày bán là ngày mới
             var phieuBan = new DOMParser().parseFromString('<PhieuBanHang></PhieuBanHang>').documentElement;
             phieuBan.setAttribute('Ngay', data.NGAY_BAN)
-            phieuBan.setAttribute('TongTien', TONG_TIEN_1_SP)
-            var spRow = new DOMParser().parseFromString('<SanPham/>').documentElement
-            spRow.setAttribute('MaSP', data.MA_SP);
-            spRow.setAttribute('Ten', data.TEN_SP);
-            spRow.setAttribute('SoLuong', data.SO_LUONG);
-            spRow.setAttribute('GiaBan', data.GIA_BAN);
-            phieuBan.appendChild(spRow);
+            phieuBan.setAttribute('TongTien', 0)
+            ThemDSSP(phieuBan,data)
             SP.appendChild(phieuBan)
         }
     } else {
         // Trường hợp mới tạo danh sách bán
         var phieuBan = new DOMParser().parseFromString('<PhieuBanHang></PhieuBanHang>').documentElement;
         phieuBan.setAttribute('Ngay', data.NGAY_BAN)
-        phieuBan.setAttribute('TongTien', TONG_TIEN_1_SP)
-        var spRow = new DOMParser().parseFromString('<SanPham/>').documentElement
-        spRow.setAttribute('MaSP', data.MA_SP);
-        spRow.setAttribute('Ten', data.TEN_SP);
-        spRow.setAttribute('SoLuong', data.SO_LUONG);
-        spRow.setAttribute('GiaBan', data.GIA_BAN);
-        phieuBan.appendChild(spRow);
+        phieuBan.setAttribute('TongTien', 0)
+        ThemDSSP(phieuBan,data)
         SP.appendChild(phieuBan)
     }
 

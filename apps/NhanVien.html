@@ -162,17 +162,29 @@
 							<div class="row row-pb-md">
 								<div class="col-md-3">
 									<h4>Tên Nhân Viên</h4>
-									<input id="HOTEN" type="text" name="" value="Nguyễn Thị Tuyết">
+									<input id="HOTEN" type="text" name="" value="" disabled>
 								</div>
 
 								<div class="col-md-3">
 									<h4>Số Điện Thoại</h4>
-									<input id="SDT" type="text" name="" value="123456789" placeholder="">
+									<input id="SDT" type="text" name="" value="" placeholder="" disabled>
 								</div>
 
 								<div class="col-md-6">
 									<h4>Địa Chỉ</h4>
-									<input id="DIACHI" type="text" name="" value="ádjafjaksjflasfjklajl" placeholder="">
+									<input id="DIACHI" type="text" name="" value="" disabled placeholder="">
+								</div>
+							</div>
+
+							<div class="row row-pb-md">
+								<div class="col-md-3">
+									<h4>Tên khách hàng</h4>
+									<input id="TEN_KHACH_HANG" type="text" name="" value="">
+								</div>
+
+								<div class="col-md-3">
+									<h4>Tổng Tiền (VND)</h4>
+									<input id="DS_BAN_TONG_TIEN" type="text" name="" value="" placeholder="" disabled>
 								</div>
 							</div>
 
@@ -200,7 +212,7 @@
 
 								<div class="col-md-2">
 									<h4>&nbsp;</h4>
-									<button type="button" onclick="TinhTien()" class="btn btn-primary">Tính Tiền</button>
+									<button type="button" onclick="ThemVaoDanhSachBan()" class="btn btn-primary">Thêm Sản Phẩm</button>
 								</div>
 							</div>
 
@@ -225,8 +237,7 @@
 
 							<div class="row row-pb-md">
 								<div class="col-md-3 col-md-push-9 tongtien">
-									<h4>Tổng Tiền:
-										<span id="DS_BAN_TONG_TIEN"></span> VND</h4>
+										<button type="button" onclick="TinhTien()" style="width: 100%" class="btn btn-primary">Tính tiền</button>
 								</div>
 							</div>
 						</div>
@@ -239,6 +250,7 @@
 											<tr>
 												<th>MaSP</th>
 												<th>Tên SP</th>
+												<th>Khách hàng</th>
 												<th>Số Lượng</th>
 												<th>Đơn Giá</th>
 												<th>Ngày Bán</th>

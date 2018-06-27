@@ -1,4 +1,6 @@
 var duongDan = 'images/';
+let DS_SPBAN = [];
+let g_TongTien = 0;
 
 function getCookie(cname) {
     var name = cname + "=";
@@ -40,26 +42,6 @@ function getData() {
     return Danh_sach_san_pham;
 }
 
-function HienThiDanhSachBanTrongNgay(ds_sp, table) {
-    var length = ds_sp.length
-    for (var j = 0; j < length; j++) {
-        var MaSP = ds_sp[j].getAttribute('MaSP')
-        var Ten = ds_sp[j].getAttribute('Ten')
-        var SoLuong = parseInt(ds_sp[j].getAttribute('SoLuong'));
-        var DonGia = parseInt(ds_sp[j].getAttribute('GiaBan'));
-        var TongTienPhaiTra = SoLuong * DonGia;
-        var newRow = `<tr>
-                            <td>${MaSP}</td>
-                            <td>${Ten}</td>
-                            <td>${SoLuong}</td>
-                            <td>${DonGia.toLocaleString()} VND</td>
-                            <td>${TongTienPhaiTra.toLocaleString()}</td>
-                        </tr>`
-        table.row.add($(newRow))
-    }
-    table.draw();
-}
-
 function HienThiDanhSachBan(table) {
     var session = getCookie('session')
     var xhttp = new XMLHttpRequest();
@@ -78,30 +60,26 @@ function HienThiDanhSachBan(table) {
                 $('#NGAY_BAN').val(today)
 
                 table.clear().draw();
-                console.log(Danh_sach_ban);
                 var ds_phieu_ban = Danh_sach_ban.getElementsByTagName('PhieuBanHang');
                 var length = ds_phieu_ban.length
                 var TongTien = 0;
-                let dsSanPhamTrongNgay = '';
                 for (var i = 0; i < length; i++) {
                     var NgayBan = ds_phieu_ban[i].getAttribute('Ngay');
                     var TONG_TIEN_CUA_PHIEU = parseInt(ds_phieu_ban[i].getAttribute('TongTien'));
                     TongTien += TONG_TIEN_CUA_PHIEU;
-                    $('#DS_BAN_TONG_TIEN').text(TONG_TIEN_CUA_PHIEU.toLocaleString());
                     var ds_sp = ds_phieu_ban[i].getElementsByTagName('SanPham');
-                    if (NgayBan === today) {
-                        dsSanPhamTrongNgay = ds_sp;
-                    }
                     var length2 = ds_sp.length
                     for (var j = 0; j < length2; j++) {
                         var MaSP = ds_sp[j].getAttribute('MaSP')
                         var Ten = ds_sp[j].getAttribute('Ten')
                         var SoLuong = parseInt(ds_sp[j].getAttribute('SoLuong'));
                         var DonGia = parseInt(ds_sp[j].getAttribute('GiaBan'));
+                        var Ten_KH = ds_sp[j].getAttribute('TenKH');
                         var TongTienPhaiTra = SoLuong * DonGia;
                         var newRow = `<tr>
                                             <td>${MaSP}</td>
                                             <td>${Ten}</td>
+                                            <td>${Ten_KH}</td>
                                             <td>${SoLuong}</td>
                                             <td>${DonGia.toLocaleString()} VND</td>
                                             <td>${NgayBan}</td>
@@ -112,7 +90,6 @@ function HienThiDanhSachBan(table) {
                 }
                 table.draw();
                 $('#DS_DA_BAN_TONG_TIEN').text(TongTien.toLocaleString());
-                HienThiDanhSachBanTrongNgay(dsSanPhamTrongNgay, g_table_ban);
             }
         }
     };
@@ -163,12 +140,10 @@ function LayGiaBanVaTenSP() {
                 ma_sp = ma_sp.toUpperCase();
                 MA_SP = MA_SP.toUpperCase();
                 if (MA_SP === ma_sp) {
-                    if(g_data[i].getAttribute('TamNgung') === 'true')
-                    {
+                    if (g_data[i].getAttribute('TamNgung') === 'true') {
                         alert('Sản Phẩm Đang Tạm Ngưng.')
                         $('#MA_SP').val('')
-                    }
-                    else {
+                    } else {
                         $('#GIA_BAN').val(g_data[i].getAttribute('GiaBan'))
                         $('#TEN_SP').val(g_data[i].getAttribute('Ten'))
                     }
@@ -180,7 +155,7 @@ function LayGiaBanVaTenSP() {
     }
 }
 
-function TinhTien() {
+function ThemVaoDanhSachBan() {
     var MA_SP = $('#MA_SP').val().toUpperCase();
     if (MA_SP === "") {
         alert('Không được để trống Mã SP')
@@ -189,18 +164,76 @@ function TinhTien() {
         if (SO_LUONG == "" || parseInt(SO_LUONG) <= 0 || isNaN(parseInt(SO_LUONG))) {
             alert('Số lượng không được bỏ trống, là số nguyên lớn hơn 0');
         } else {
+            var GIA_BAN = $('#GIA_BAN').val();
+            var TEN_SP = $('#TEN_SP').val();
+            var TONG_TIEN = +GIA_BAN * +SO_LUONG
+            g_TongTien += TONG_TIEN;
+            $('#DS_BAN_TONG_TIEN').val(g_TongTien.toLocaleString());
+            var data = {
+                MA_SP: MA_SP,
+                GIA_BAN: GIA_BAN,
+                TEN_SP: TEN_SP,
+                SO_LUONG: SO_LUONG
+            }
+            var i = 0;
+            while (i < DS_SPBAN.length) {
+                if (DS_SPBAN[i].MA_SP === MA_SP) {
+                    DS_SPBAN[i].SO_LUONG = +DS_SPBAN[i].SO_LUONG + (+SO_LUONG);
+                    break;
+                }
+                i++;
+            }
+            if (i >= DS_SPBAN.length) {
+                DS_SPBAN.push(data);
+                var newRow = `<tr>
+                                <td>${MA_SP}</td>
+                                <td>${TEN_SP}</td>
+                                <td>${SO_LUONG}</td>
+                                <td>${GIA_BAN}</td>
+                                <td>${TONG_TIEN.toLocaleString()}</td>
+                            </tr>`;
+                g_table_ban.row.add($(newRow));
+            }
+            else {
+                g_table_ban.clear().draw();
+                for (var j = 0; j < DS_SPBAN.length; j++) {
+                    var tt = +DS_SPBAN[j].SO_LUONG * +GIA_BAN
+                    var newRow = `<tr>
+                                    <td>${DS_SPBAN[j].MA_SP}</td>
+                                    <td>${DS_SPBAN[j].TEN_SP}</td>
+                                    <td>${DS_SPBAN[j].SO_LUONG}</td>
+                                    <td>${DS_SPBAN[j].GIA_BAN}</td>
+                                    <td>${tt.toLocaleString()}</td>
+                                </tr>`;
+                    g_table_ban.row.add($(newRow));
+                }
+            }
+            g_table_ban.draw();
+        }
+    }
+}
+
+function TinhTien() {
+    if (DS_SPBAN.length == 0) {
+        alert('Chưa có sản phẩm nào.');
+    }
+    else {
+        var TenKhachHang = $('#TEN_KHACH_HANG').val();
+        if (TenKhachHang === "") {
+            alert('Không được để trống Tên Khách Hàng')
+        }
+        else {
             var session = getCookie('session')
             var NGAY_BAN = $('#NGAY_BAN').val();
             var TEN_SP = $('#TEN_SP').val();
             var GIA_BAN = $('#GIA_BAN').val();
             var data = {
                 'session': session,
-                'MA_SP': MA_SP,
-                'SO_LUONG': SO_LUONG,
-                'GIA_BAN': GIA_BAN,
                 'NGAY_BAN': NGAY_BAN,
-                'TEN_SP': TEN_SP
+                'TEN_KH': TenKhachHang,
+                'DS_SP': JSON.stringify(DS_SPBAN)
             }
+            console.log(data);
 
             $.ajax({
                 url: 'http://localhost:3001/TinhTien',
@@ -212,6 +245,8 @@ function TinhTien() {
                 },
                 success: function (data) {
                     alert(data);
+                    g_TongTien = 0;
+                    DS_SPBAN = [];
                     location.reload();
                 }
             })
