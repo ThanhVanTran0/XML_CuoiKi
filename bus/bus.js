@@ -150,7 +150,8 @@ app.createServer((req, res) => {
 										}).on('end', () => {
 											if (response.statusCode === 404) {
 												res.writeHead(404, {
-													'Content-Type': 'text/plain'
+													'Content-Type': 'text/plain',
+													'Access-Control-Allow-Origin': '*'
 												})
 												res.end(body);
 											} else {
@@ -169,13 +170,15 @@ app.createServer((req, res) => {
 
 									httpRes.on('error', function () {
 										res.writeHead(404, {
-											'Content-Type': 'text/plain;charset=utf-8'
+											'Content-Type': 'text/plain;charset=utf-8',
+											'Access-Control-Allow-Origin': '*'
 										});
 										res.end('Máy chủ không phản hồi')
 									})
 								} else {
 									res.writeHead(404, {
-										'Content-Type': 'text/plain;charset=utf-8'
+										'Content-Type': 'text/plain;charset=utf-8',
+										'Access-Control-Allow-Origin': '*'
 									})
 									res.end('Vui lòng đăng nhập lại');
 								}
@@ -232,13 +235,15 @@ app.createServer((req, res) => {
 
 									httpRes.on('error', function () {
 										res.writeHead(404, {
-											'Content-Type': 'text/plain;charset=utf-8'
+											'Content-Type': 'text/plain;charset=utf-8',
+											'Access-Control-Allow-Origin': '*'
 										});
 										res.end('Máy chủ không phản hồi')
 									})
 								} else {
 									res.writeHead(404, {
-										'Content-Type': 'text/plain;charset=utf-8'
+										'Content-Type': 'text/plain;charset=utf-8',
+										'Access-Control-Allow-Origin': '*'
 									})
 									res.end('Vui lòng đăng nhập lại');
 								}
